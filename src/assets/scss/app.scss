@@ -2,7 +2,7 @@
 @import "~bulma/sass/utilities/functions";
 // 1. Set your own initial variables and derived 
 //    variables in _variables.scss
-@import "variables";
+@import "abstract/variables";
 
 // 2. Setup your Custom Colors
 $linkedin: #0077b5;
@@ -26,3 +26,4 @@ $colors: map-merge($colors, $addColors);
 @import "~buefy/src/scss/buefy";
 
 // 4. Provide custom buefy overrides and site styles here
+@import "components/_components";

@@ -3,7 +3,7 @@
 
 // Colors
 
-$black:        hsl(0, 0%, 4%) !default;
+$black:        #313131;
 $black-bis:    hsl(0, 0%, 7%) !default;
 $black-ter:    hsl(0, 0%, 14%) !default;
 
@@ -13,7 +13,7 @@ $grey:         hsl(0, 0%, 48%) !default;
 $grey-light:   hsl(0, 0%, 71%) !default;
 $grey-lighter: hsl(0, 0%, 86%) !default;
 
-$white-ter:    hsl(0, 0%, 96%) !default;
+$white-ter:    hsl(0, 0%, 96%);
 $white-bis:    hsl(0, 0%, 98%) !default;
 $white:        hsl(0, 0%, 100%) !default;
 
@@ -28,7 +28,7 @@ $red:          hsl(348, 100%, 61%) !default;
 
 // Typography
 
-$family-sans-serif: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default;
+$family-sans-serif: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 $family-monospace: monospace !default;
 $render-mode: optimizeLegibility !default;
 
@@ -106,7 +106,8 @@ $dark-invert: $light !default;
 
 // General colors
 
-$background: $white-ter !default;
+$background: $black;
+$body-background-color: $background;
 
 $border: $grey-lighter !default;
 $border-hover: $grey-light !default;
