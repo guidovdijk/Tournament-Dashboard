@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navigation />
-    <div class="container">
+    <div class="container is-fluid">
       <router-view/>
     </div>
     <Background />

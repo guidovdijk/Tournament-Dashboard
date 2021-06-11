@@ -1,16 +1,24 @@
 <template>
-  <form class="box">
+  <form class="box box--login">
     <b-field label="Email"
-        type="is-danger"
-        message="This email is invalid">
-        <b-input type="email"></b-input>
+        message="">
+        <b-input
+          type="email"
+          placeholder="dr.mundoe@gmail.com...">
+        </b-input>
     </b-field>
     <b-field label="Password">
       <b-input type="password"
           value=""
+          placeholder="cle(a)ver-password..."
           password-reveal>
       </b-input>
     </b-field>
+    <b-button tag="input"
+      native-type="submit"
+      value="Login"
+      type="is-primary"
+    />
   </form>
 </template>
 

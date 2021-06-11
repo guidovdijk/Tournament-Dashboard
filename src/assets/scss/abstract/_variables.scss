@@ -11,7 +11,7 @@ $grey-darker:  hsl(0, 0%, 21%) !default;
 $grey-dark:    hsl(0, 0%, 29%) !default;
 $grey:         hsl(0, 0%, 48%) !default;
 $grey-light:   hsl(0, 0%, 71%) !default;
-$grey-lighter: hsl(0, 0%, 86%) !default;
+$grey-lighter: #CECECE;
 
 $white-ter:    hsl(0, 0%, 96%);
 $white-bis:    hsl(0, 0%, 98%) !default;
@@ -28,7 +28,7 @@ $red:          hsl(348, 100%, 61%) !default;
 
 // Typography
 
-$family-sans-serif: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+$family-sans-serif: "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 $family-monospace: monospace !default;
 $render-mode: optimizeLegibility !default;
 
@@ -75,7 +75,7 @@ $variable-columns: true !default;
 
 // The default Bulma derived variables are declared below
 
-$primary: $turquoise !default;
+$primary: #0DA258;
 
 $info: $cyan !default;
 $success: $green !default;
@@ -114,7 +114,7 @@ $border-hover: $grey-light !default;
 
 // Text colors
 
-$text: $grey-dark !default;
+$text: $white;
 $text-invert: findColorInvert($text) !default;
 $text-light: $grey !default;
 $text-strong: $grey-darker !default;
@@ -151,3 +151,18 @@ $size-small: $size-7 !default;
 $size-normal: $size-6 !default;
 $size-medium: $size-5 !default;
 $size-large: $size-4 !default;
+
+$box-background-color: rgba(51, 64, 71, 0.75);
+$label-color: $grey-lighter;
+$label-weight: $weight-normal;
+$input-background-color: #1B2326;
+$input-shadow: none;
+$input-placeholder-color: #718187;
+$input-color: #A7B4BA;
+$input-border-color: transparent;
+$input-hover-border-color: transparent;
+$navbar-background-color: #111717;
+$navbar-height: 5.25rem;
+$navbar-item-color: #CBDFEB;
+$navbar-item-hover-color: #deeff8;
+$navbar-item-hover-background-color: transparent;

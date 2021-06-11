@@ -1,5 +1,9 @@
 <template>
-  <LoginForm />
+<div class="columns is-centered">
+  <div class="column is-4">
+    <LoginForm />
+  </div>
+</div>
 </template>
 
 <script>
