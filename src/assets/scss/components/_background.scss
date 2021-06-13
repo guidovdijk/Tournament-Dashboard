@@ -1,7 +1,11 @@
+body {
+  padding-bottom: 100px;
+}
+
 .background {
   background-color: $body-background-color;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   width: 100%;
   top: 0;
   z-index: -1;
