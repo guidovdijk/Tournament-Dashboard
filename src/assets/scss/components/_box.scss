@@ -6,7 +6,7 @@
   &--register {
     margin-top: 150px;
   }
-  
+
   &--login, &--register {
     .is-grouped {
       margin-top: 28px;
@@ -14,6 +14,35 @@
       span {
         margin: 0 20px;
       }
+    }
+  }
+
+  &--stats {
+    text-align: center;
+    width: 163px;
+    border-radius: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    &:not(:last-child) {
+      margin-right: 7px;
+      margin-bottom: 0;
+    }
+
+    .title, .subtitle {
+      width: 100%;
+    }
+
+    .title.is-7 {
+      margin-top: 10px;
+      color: $grey-lighter;
+      font-weight: $weight-normal;
+    }
+    .subtitle.is-6 {
+      color: $white;
+      font-weight: $weight-semibold;
+      font-size: 14px;
     }
   }
 }

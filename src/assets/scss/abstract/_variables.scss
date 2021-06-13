@@ -10,7 +10,7 @@ $black-ter:    hsl(0, 0%, 14%) !default;
 $grey-darker:  hsl(0, 0%, 21%) !default;
 $grey-dark:    hsl(0, 0%, 29%) !default;
 $grey:         hsl(0, 0%, 48%) !default;
-$grey-light:   hsl(0, 0%, 71%) !default;
+$grey-light:   #869CA8;
 $grey-lighter: #CECECE;
 
 $white-ter:    hsl(0, 0%, 96%);
@@ -44,7 +44,7 @@ $weight-light: 300 !default;
 $weight-normal: 400 !default;
 $weight-medium: 500 !default;
 $weight-semibold: 600 !default;
-$weight-bold: 700 !default;
+$weight-bold: 800 !default;
 
 // Responsiveness
 
@@ -152,6 +152,8 @@ $size-normal: $size-6 !default;
 $size-medium: $size-5 !default;
 $size-large: $size-4 !default;
 
+$gap: 16px;
+
 $box-background-color: rgba(51, 64, 71, 0.75);
 $label-color: $grey-lighter;
 $label-weight: $weight-normal;
@@ -167,3 +169,8 @@ $navbar-item-color: #CBDFEB;
 $navbar-item-hover-color: #deeff8;
 $navbar-item-hover-background-color: transparent;
 $title-color: $white;
+$icon-color: $grey-light;
+$icon-dimensions-medium: 1.5rem;
+$content-heading-color: $title-color;
+$progress-bar-background-color: #171A1A;
+$progress-value-background-color: $primary;

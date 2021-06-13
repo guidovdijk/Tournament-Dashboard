@@ -1,0 +1,6 @@
+.icon {
+  color: $icon-color;
+  .mdi.mdi-36px::before {
+    font-size: 30px;
+  }
+}

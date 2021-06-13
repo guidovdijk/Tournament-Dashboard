@@ -1,0 +1,31 @@
+.media {
+  &--player-profile {
+    flex-wrap: wrap;
+    align-items: center;
+    .title {
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    .media-footer {
+      flex-basis: 100%;
+      margin-top: 5px;
+
+      .progress-wrapper {
+        max-width: 215px;
+        margin: 0 10px;
+        margin-bottom: 0;
+        .progress {
+          height: 5px;
+        }
+      }
+
+      > div, .progress-wrapper {
+        width: 100%;
+      }
+    }
+  }
+}
