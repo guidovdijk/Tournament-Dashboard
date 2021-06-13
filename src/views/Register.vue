@@ -1,17 +1,17 @@
 <template>
 <div class="columns is-centered">
   <div class="column is-5 is-4-desktop">
-    <LoginForm />
+    <RegisterForm />
   </div>
 </div>
 </template>
 
 <script>
-import LoginForm from "../components/forms/Login.vue";
+import RegisterForm from "../components/forms/Register.vue";
 export default {
-  name: "Login",
+  name: "Register",
   components: {
-    LoginForm
+    RegisterForm
   }
 }
 </script>

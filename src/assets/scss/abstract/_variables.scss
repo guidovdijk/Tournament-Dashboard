@@ -129,11 +129,11 @@ $pre-background: $background !default;
 
 // Link colors
 
-$link: $blue !default;
+$link: $white !default;
 $link-invert: $blue-invert !default;
 $link-visited: $purple !default;
 
-$link-hover: $grey-darker !default;
+$link-hover: $white;
 $link-hover-border: $grey-light !default;
 
 $link-focus: $grey-darker !default;
@@ -166,3 +166,4 @@ $navbar-height: 5.25rem;
 $navbar-item-color: #CBDFEB;
 $navbar-item-hover-color: #deeff8;
 $navbar-item-hover-background-color: transparent;
+$title-color: $white;

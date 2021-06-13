@@ -1,10 +1,25 @@
 .navbar {
-  // .router-link-exact-active,
-  // .router-link-active {
-  //   color: $navbar-item-hover-color;
-  // }
-
   .navbar-start {
     margin-left: 150px;
+
+    .navbar-item {
+      margin-right: 30px;
+      &:last-child { 
+        margin-right: 0;
+      }
+    }
+  }
+  
+  .navbar-item img {
+    max-height: 2.75rem;
+  }
+
+  .navbar-item a:not(.button) {
+    color: currentColor;
+    
+    &:hover {
+      color: $navbar-item-hover-color;
+
+    }
   }
 }

@@ -1,9 +1,19 @@
 .box {
   &--login {
     margin-top: 200px;
+  }
 
-    .button {
+  &--register {
+    margin-top: 150px;
+  }
+  
+  &--login, &--register {
+    .is-grouped {
       margin-top: 28px;
+
+      span {
+        margin: 0 20px;
+      }
     }
   }
 }
