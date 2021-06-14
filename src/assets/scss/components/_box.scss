@@ -45,4 +45,19 @@
       font-size: 14px;
     }
   }
+
+  &--table {
+    padding: 30px;
+    padding-bottom: 0;
+    
+    .title {
+      font-weight: $weight-normal;
+      margin-bottom: 0px;
+      background-color: #2d393f;
+      padding-bottom: 10px;
+      margin-bottom: -20px;
+      z-index: 1;
+      position: relative;
+    }
+  }
 }

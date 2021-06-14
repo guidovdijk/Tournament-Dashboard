@@ -15,7 +15,7 @@
     </div>
     <div class="columns is-multiline is-align-items-center">
       <div class="column is-8">
-        <div class="match-history-wrapper">
+        <div class="box box--table">
           <h3 class="title is-5">Match History</h3>
 
           <b-table :data="data">

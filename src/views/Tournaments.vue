@@ -6,7 +6,7 @@
     </div>
     <div class="column is-9">
 
-      <div class="match-history-wrapper">
+      <div class="box box--table">
         <h3 class="title is-5">Tournaments</h3>
 
         <b-table :data="data" :mobile-cards="false" class="is-large">
@@ -34,8 +34,8 @@
                 props.row.price
               }}
           </b-table-column>
-          <b-table-column  field="id" label="" v-slot="props">
-            <router-link :to="'/tournament/'+props.row.id" class="is-link has-text-grey-lighter">Details</router-link>
+          <b-table-column  field="id" label="" v-slot="props" cell-class="has-text-right">
+            <router-link :to="'/tournaments/'+props.row.id" class="is-link has-text-grey-lighter">Details</router-link>
           </b-table-column>
         </b-table>
       </div>
@@ -54,12 +54,12 @@ export default {
   data(){
     return {
       data: [
-        { 'id': 1, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 3, 'price': '3 skins', 'details': '' },
-        { 'id': 2, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 3, 'price': '3 skins', 'details': '' },
-        { 'id': 3, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 3, 'price': '3 skins', 'details': '' },
-        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 3, 'price': '3 skins', 'details': '' },
-        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 3, 'price': '3 skins', 'details': '' },
-        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 3, 'price': '3 skins', 'details': '' },
+        { 'id': 1, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 3, 'price': '3 skins' },
+        { 'id': 2, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 3, 'price': '3 skins' },
+        { 'id': 3, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 3, 'price': '3 skins' },
+        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 3, 'price': '3 skins' },
+        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 3, 'price': '3 skins' },
+        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 3, 'price': '3 skins' },
       ],
     }
   }
