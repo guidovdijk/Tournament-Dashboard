@@ -13,12 +13,27 @@
     position: relative;
   }
 }
+
 .table-wrapper {
   max-height: 525px;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding-right: 30px;
   margin-right: -30px;
+  
+  @include mobile(){
+    overflow-x: auto;
+    .table {
+      min-width: 450px;
+    }
+  }
 }
+
+.is-large {
+  .table-wrapper {
+    max-height: 790px;
+  }
+}
+
 .table {
   $table-border-radius: 6px;
 

@@ -46,7 +46,7 @@
               </span>
             </b-table-column>
             <b-table-column  field="id" label="" v-slot="props">
-              <router-link :to="'/tournament/'+props.row.id" class="is-link">Details</router-link>
+              <router-link :to="'/tournament/'+props.row.id" class="is-link has-text-grey-lighter">Details</router-link>
             </b-table-column>
           </b-table>
         </div>

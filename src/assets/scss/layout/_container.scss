@@ -1,3 +1,9 @@
 .container {
   margin-top: 95px;
+
+  @include mobile(){
+    .is-fluid {
+      padding: 20px;
+    }
+  } 
 }
