@@ -1,4 +1,4 @@
-const Tournament = require("../models/tournament");
+const Tournament = require("../model/tournament");
 
 // Create and Save a new Tournaments
 exports.create = (req, res) => {
