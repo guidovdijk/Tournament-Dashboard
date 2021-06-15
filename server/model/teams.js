@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const teamSchema = mongoose.Schema(
   {
-    team_name: { type: String, unique: true },
+    team_name: { type: String, unique: true, required: true },
     placement: Number,
     players: [{
       type: mongoose.Schema.Types.ObjectId,
@@ -12,6 +12,8 @@ const teamSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Tournament"
     }
+  }, {
+    collection: 'teams'
   }
 );
 

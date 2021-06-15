@@ -1,7 +1,11 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
+const tournamentRoutes = require("./routes/tournamentRoutes.js");
+const config = require("./config/db.config");
 
 const app = express();
+const PORT = process.env.PORT || 8090;
 
 var corsOptions = {
   origin: "http://localhost:8081"
@@ -16,14 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome." });
-});
+// app.get("/", (req, res) => {
+//   res.json({ message: "Welcome." });
+// });
 
 
-const db = require("./model/index.js");
-db.mongoose
-  .connect(db.url, {
+mongoose.connect(config.url, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -35,8 +37,9 @@ db.mongoose
     process.exit();
   });
 
-  // set port, listen for requests
-const PORT = process.env.PORT || 8090;
+app.use('/tournaments', tournamentRoutes);
+
+// set port, listen for requests
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
