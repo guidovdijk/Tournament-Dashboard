@@ -2,13 +2,12 @@
   <form class="box box--tournament">
     <h3 class="title is-4">Tournament Details</h3>
     <b-field label="Start Date and Time">
-      <b-datetimepicker 
+      <b-datetimepicker required 
         v-model="datetime"
         placeholder="10/07/2021 - 21:00:00..."
         :locale="locale"
         :timepicker="{enableSeconds, hourFormat}"
       >
-
         <template #right>
             <b-button
                 label="Now"
@@ -21,12 +20,12 @@
     </b-field>
 
     <b-field label="Min and Max Teams needed">
-      <b-slider v-model="playersPerTeam" :min="2" :max="20" :step="1" ticks>
+      <b-slider required v-model="playersPerTeam" :min="2" :max="20" :step="1" ticks>
       </b-slider>
     </b-field>
 
     <b-field label="Players per Team">
-      <b-numberinput controls-position="compact" placeholder="6..."></b-numberinput>
+      <b-numberinput required controls-position="compact" placeholder="6..."></b-numberinput>
     </b-field>
 
     <b-field label="Game type">
