@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="media-footer level">
-        <div class="level-left">
+        <div class="level-left is-flex">
           <p class="has-text-weight-bold has-text-grey-light">Lvl {{player.level}}</p>
           <b-progress :value="levelProgress"></b-progress>
           <p class="has-text-weight-normal has-text-grey-light">{{player.currentExp}} / {{player.totalExp}}</p>

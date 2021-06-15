@@ -17,6 +17,10 @@
     }
   }
 
+  &--tournament .button[type='submit'] {
+    margin-top: 30px;
+  }
+
   &--stats {
     text-align: center;
     width: 163px;

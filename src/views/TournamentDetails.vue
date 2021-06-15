@@ -1,20 +1,20 @@
 <template>
-  <div class="columns is-multiline is-align-items-center">
+  <div class="columns is-multiline">
     <div class="column is-12 is-flex is-justify-content-space-between is-align-items-center">
       <router-link :to="'/'" class="is-link has-text-grey-lighter">Back to home</router-link>
     </div>
     <div class="column is-8">
       <div class="box box--table">
-        <h3 class="title is-5">Tournaments</h3>
-
+        <h3 class="title is-5">Tournament Teams</h3>
         <b-table 
-        :data="data" 
-        :mobile-cards="false" 
-        detailed
-        custom-detail-row
-        :show-detail-icon="showDetailIcon"
-        detail-key="id"
-        class="is-large table--teams">
+          :data="data" 
+          :mobile-cards="false" 
+          detailed
+          custom-detail-row
+          :show-detail-icon="showDetailIcon"
+          detail-key="id"
+          class="is-large table--teams"
+        >
           <b-table-column field="type" label="Type" v-slot="props">
             {{
               props.row.team
@@ -30,14 +30,30 @@
             }}
           </b-table-column>
           <b-table-column  field="id" label="" cell-class="has-text-right" v-slot="props">
-            <b-button class="table__button-fix" type="is-primary" @click="joinTeam(props.row.id)">Join</b-button>
+            <template v-if="loggedInPlayerInTeam(props.row.players)">
+              <b-button 
+                class="table__button-fix" 
+                type="is-danger" 
+                @click="leaveTeam(props.row.id)"
+              >
+                Leave
+              </b-button>
+            </template>
+            <template v-else>
+              <b-button 
+                class="table__button-fix" 
+                type="is-primary" 
+                @click="joinTeam(props.row.id)"
+                :disabled="props.row.teamSize <= props.row.playersPresent"
+              >
+                Join
+              </b-button>
+            </template>
           </b-table-column>
 
           <template slot="detail" slot-scope="props">
             <tr class="table--teams__players" >
               <td colspan="4" class="table--teams__players__table-wrapper">
-
-            
                 <table>
                   <thead>
                     <tr>
@@ -54,41 +70,49 @@
                     </tr>
                   </tbody>
                 </table>
-
               </td>
-     
             </tr>
           </template>
         </b-table>
       </div>
     </div>
-    <div class="column is-3">
-
+    <div class="column is-4">
+      <TournamentForm />
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import TournamentForm from '@/components/forms/Tournament';
 
 export default {
   name: 'TournamentDetails',
   components: {
-
+    TournamentForm
   },
   data(){
     return {
       showDetailIcon: true,
       data: [
         { id: 1, team: "Team 1", teamSize: 5, playersPresent: 2, players: [{id: 1, name: 'Loremana 1', points: 124}, {id: 4, name: 'LoremLife', points: 124}] },
-        { id: 2, team: "Team 2", teamSize: 5, playersPresent: 2, players: [{id: 2, name: 'Loremana 2', points: 124}, {id: 5, name: 'LoremLife', points: 124}] },
-        { id: 3, team: "Team 3", teamSize: 5, playersPresent: 2, players: [{id: 3, name: 'Loremana 3', points: 124}, {id: 6, name: 'LoremLife', points: 124}] },
+        { id: 2, team: "Team 2", teamSize: 5, playersPresent: 5, players: [{id: 2, name: 'Loremana 2', points: 124}, {id: 5, name: 'LoremLife', points: 124}] },
+        { id: 3, team: "Team 3", teamSize: 5, playersPresent: 6, players: [{id: 3, name: 'Loremana 3', points: 124}, {id: 6, name: 'LoremLife', points: 124}] },
       ],
     }
   },
   methods: {
     joinTeam: function(id){
-      console.log(id);
+      console.log('join team: ' + id);
+    },
+    leaveTeam: function(id){
+      console.log('leave team: ' + id);
+    },
+    loggedInPlayerInTeam: function(players){
+      // TODO: Rewrite to use player data from login session
+      const loggedInPlayerId = 2;
+
+      return players.filter(player => player.id === loggedInPlayerId).length > 0;
     }
   }
 }

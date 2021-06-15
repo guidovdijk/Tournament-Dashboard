@@ -7,3 +7,28 @@
 .control.has-icons-left .icon, .control.has-icons-right .icon {
   height: 3.1em;
 }
+
+.b-numberinput {
+  width: 288px;
+  .button {
+    height: 3.1em;
+  }
+}
+
+.b-slider {
+  margin-bottom: 1.25em;
+}
+
+.select select {
+  font-size: 1rem;
+  height: 3.1em;
+  option {
+    color: $input-color;
+  }
+}
+.select:not(.is-multiple):not(.is-loading):hover::after {
+  border-color: $grey-lighter;
+}
+.select:not(.is-multiple):not(.is-loading)::after {
+  border-color: $input-color;
+}

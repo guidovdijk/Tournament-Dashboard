@@ -18,7 +18,7 @@
         <div class="box box--table">
           <h3 class="title is-5">Match History</h3>
 
-          <b-table :data="data">
+          <b-table :data="data" :mobile-cards="false">
             <b-table-column field="type" label="Type" v-slot="props">
               {{
                 props.row.type
@@ -45,7 +45,7 @@
                 }}
               </span>
             </b-table-column>
-            <b-table-column  field="id" label="" v-slot="props">
+            <b-table-column  field="id" label="" cell-class="has-text-right" v-slot="props">
               <router-link :to="'/tournament/'+props.row.id" class="is-link has-text-grey-lighter">Details</router-link>
             </b-table-column>
           </b-table>

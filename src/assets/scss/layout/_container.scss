@@ -1,8 +1,11 @@
 .container {
   margin-top: 95px;
 
-  @include mobile(){
-    .is-fluid {
+  &.is-fluid {
+    @include fullhd(){
+      padding: 0 140px;
+    }
+    @include mobile(){
       padding: 20px;
     }
   } 
