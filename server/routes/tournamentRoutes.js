@@ -1,28 +1,22 @@
-module.exports = server => {
-  const tournament = require("../controllers/tournamentController.js");
+const tournament = require("../controller/tournamentController.js");
+const tournamentRoute = require("express").Router();
 
-  const router = require("express").Router();
+// Create a new tournament
+tournamentRoute.post("/", tournament.create);
 
-  // Create a new Tutorial
-  router.post("/", tournament.create);
+// Retrieve all tournament
+tournamentRoute.get("/", tournament.findAll);
 
-  // Retrieve all tournament
-  router.get("/", tournament.findAll);
+// Retrieve a single tournament with id
+tournamentRoute.get("/:id", tournament.findOne);
 
-  // Retrieve all published tournament
-  router.get("/published", tournament.findAllPublished);
+// Update a tournament with id
+tournamentRoute.put("/:id", tournament.update);
 
-  // Retrieve a single Tutorial with id
-  router.get("/:id", tournament.findOne);
+// Delete a tournament with id
+tournamentRoute.delete("/:id", tournament.delete);
 
-  // Update a Tutorial with id
-  router.put("/:id", tournament.update);
+// Create a new tournament
+tournamentRoute.delete("/", tournament.deleteAll);
 
-  // Delete a Tutorial with id
-  router.delete("/:id", tournament.delete);
-
-  // Create a new Tutorial
-  router.delete("/", tournament.deleteAll);
-
-  server.use('/server/tournaments', router);
-};
+module.exports = tournamentRoute;

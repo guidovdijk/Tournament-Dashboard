@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const tournamentRoutes = require("./routes/tournamentRoutes.js");
+const tournamentRoute = require("./routes/tournamentRoutes.js");
 const config = require("./config/db.config");
 
 const app = express();
@@ -33,7 +33,7 @@ mongoose.connect(config.url, {
     process.exit();
   });
 
-app.use('/tournaments', tournamentRoutes);
+app.use('/tournaments', tournamentRoute);
 
 // set port, listen for requests
 app.listen(PORT, () => {
