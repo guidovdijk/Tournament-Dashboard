@@ -5,7 +5,7 @@ const tournamentRoute = require("./routes/tournamentRoutes.js");
 const config = require("./config/db.config");
 
 const app = express();
-const PORT = process.env.PORT || 8090;
+const PORT = 8090;
 
 app.use(cors());
 
