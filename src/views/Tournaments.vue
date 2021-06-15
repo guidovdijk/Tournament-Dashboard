@@ -58,7 +58,7 @@ export default {
         { 'id': 1, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'upcoming', 'price': '3 skins' },
         { 'id': 2, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'started', 'price': '3 skins' },
         { 'id': 3, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'upcoming', 'price': '3 skins' },
-        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'started', 'price': '3 skins' },
+        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'ended', 'price': '3 skins' },
         { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'started', 'price': '3 skins' },
         { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'upcoming', 'price': '3 skins' },
       ],
