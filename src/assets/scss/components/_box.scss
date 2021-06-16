@@ -1,12 +1,4 @@
 .box {
-  &--login {
-    margin-top: 200px;
-  }
-
-  &--register {
-    margin-top: 150px;
-  }
-
   &--login, &--register {
     .is-grouped {
       margin-top: 28px;
