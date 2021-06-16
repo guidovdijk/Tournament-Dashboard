@@ -7,7 +7,7 @@ const tournamentSchema = mongoose.Schema(
     price: { type: String, required: true },
     teams: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Player'
+      ref: 'Team'
     }],
     game_type: {
       type: String,

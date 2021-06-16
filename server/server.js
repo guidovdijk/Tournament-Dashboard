@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const tournamentRoute = require("./routes/tournamentRoutes.js");
+const teamRoute = require("./routes/teamRoutes.js");
+const playerRoute = require("./routes/playerRoutes.js");
 const config = require("./config/db.config");
 
 const app = express();
@@ -14,12 +16,6 @@ app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-
-// simple route
-// app.get("/", (req, res) => {
-//   res.json({ message: "Welcome." });
-// });
-
 
 mongoose.connect(config.url, {
     useNewUrlParser: true,
@@ -34,6 +30,8 @@ mongoose.connect(config.url, {
   });
 
 app.use('/tournaments', tournamentRoute);
+app.use('/tournaments/teams', teamRoute);
+app.use('/player', playerRoute);
 
 // set port, listen for requests
 app.listen(PORT, () => {

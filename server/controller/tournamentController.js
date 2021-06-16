@@ -32,7 +32,7 @@ exports.findOne = (req, res) => {
         res.json(err);
       }
       res.json(tournament);
-  });
+  }).populate('teams');
 };
 
 // Update a Tournaments by the id in the request
