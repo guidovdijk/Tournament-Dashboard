@@ -21,7 +21,7 @@
             placeholder="dr.mundoe...">
           </b-input>
       </b-field>
-      <b-field label="Password">
+      <b-field label="Password" :type="validatePassword ? 'is-danger' : ''" :message="validatePassword ? 'Password needs to be the same' : ''">
         <b-input type="password"
             required
             v-model="registerFormData.password"
@@ -54,6 +54,8 @@
 </template>
 
 <script>
+import { url } from '@/util/utils.js';
+
 export default {
   name: "Register",
   data(){
@@ -66,9 +68,18 @@ export default {
       }
     }
   },
+  computed: {
+    validatePassword: function(){
+      const { password, retypePassword } = this.registerFormData;
+
+      return password !== retypePassword && retypePassword.length > 0 && password.length > 0;
+    },
+  },
   methods: {
     register: function(){
-      console.log(this.registerFormData);
+      this.axios.post(url.players + '/register', this.registerFormData).then(() => {
+          this.$router.push({name: 'login'});
+        });
     }
   }
 }

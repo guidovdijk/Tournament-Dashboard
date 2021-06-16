@@ -35,6 +35,17 @@ exports.findOne = (req, res) => {
   });
 };
 
+// Find a single players with an id
+exports.login = (req, res) => {
+  let id = req.params.id;
+  Player.findById(id, function (err, player){
+      if(err) {
+        res.json(err);
+      }
+      res.json(player);
+  });
+};
+
 // Update a players by the id in the request
 exports.update = (req, res) => {
   Player.findById(req.params.id, function(err, player) {

@@ -31,7 +31,7 @@ mongoose.connect(config.url, {
 
 app.use('/tournaments', tournamentRoute);
 app.use('/tournaments/teams', teamRoute);
-app.use('/player', playerRoute);
+app.use('/players', playerRoute);
 
 // set port, listen for requests
 app.listen(PORT, () => {
