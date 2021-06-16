@@ -55,4 +55,4 @@ playerSchema.methods.comparePassword = function(candidatePassword, cb) {
   });
 };
    
-module.exports = mongoose.model("Player", playerSchema);
+module.exports = mongoose.model("player", playerSchema);

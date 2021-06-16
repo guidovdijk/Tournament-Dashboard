@@ -3,13 +3,20 @@ const Player = require("../model/player");
 // Create and Save a new players
 exports.create = (req, res) => {
   let player = new Player(req.body);
-  player.save()
-    .then(() => {
+
+  player.save(function(err){
+    if(err){
+      if (err.name === 'MongoError' && err.code === 11000) {
+        const field = Object.keys(err.keyPattern)[0];
+        res.status(400).send({ field, message: `${field} is already in use` });
+      } else {
+        res.status(400).send("Unable to save to database");
+      }
+    } else {
       res.status(200).json({'player': 'player has been successfully added'});
-    })
-    .catch(() => {
-      res.status(400).send("unable to save to database");
-    });
+    }
+  })
+
 };
 
 // Retrieve all players from the database.

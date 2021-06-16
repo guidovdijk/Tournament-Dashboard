@@ -9,6 +9,8 @@ const config = require("./config/db.config");
 const app = express();
 const PORT = 8090;
 
+mongoose.Promise = global.Promise;
+
 app.use(cors());
 
 // parse requests of content-type - application/json

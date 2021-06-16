@@ -17,7 +17,7 @@
           <b-input
             type="text"
             required
-            v-model="registerFormData.username"
+            v-model="registerFormData.name"
             placeholder="dr.mundoe...">
           </b-input>
       </b-field>
@@ -62,7 +62,7 @@ export default {
     return {
       registerFormData: {
         email: '',
-        username: '',
+        name: '',
         password: '',
         retypePassword: ''
       }
@@ -77,9 +77,12 @@ export default {
   },
   methods: {
     register: function(){
+      console.log(url.players + '/register');
       this.axios.post(url.players + '/register', this.registerFormData).then(() => {
-          this.$router.push({name: 'login'});
-        });
+          this.$router.push({name: 'Login'});
+        }).catch((error) => {
+                console.log(error.response);
+            })
     }
   }
 }
