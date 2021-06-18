@@ -17,11 +17,13 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.13",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
     "vue-radial-progress": "^0.3.2",
-    "vue-router": "^3.2.0"
+    "vue-router": "^3.2.0",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

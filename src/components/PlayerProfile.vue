@@ -8,7 +8,7 @@
       </figure>
       <div class="media-content">
         <div class="content">
-          <h4 class="title">John Doe</h4>
+          <h4 class="title">{{player.name}}</h4>
           <p class="has-text-grey-lighter">
             Last match {{lastMatchInDays}} days ago.
           </p>
@@ -17,8 +17,8 @@
       <div class="media-footer level">
         <div class="level-left is-flex">
           <p class="has-text-weight-bold has-text-grey-light">Lvl {{player.level}}</p>
-          <b-progress :value="levelProgress"></b-progress>
-          <p class="has-text-weight-normal has-text-grey-light">{{player.currentExp}} / {{player.totalExp}}</p>
+          <b-progress type="is-primary" :value="player.currentXp"></b-progress>
+          <p class="has-text-weight-normal has-text-grey-light">{{player.currentXp}} / 100</p>
         </div>
       </div>
     </article>
@@ -34,8 +34,8 @@ export default {
   },
   computed: {
     levelProgress: function(){
-      const {currentExp, totalExp} = this.player;
-      return (currentExp / totalExp) * 100;
+      const {currentExp} = this.player;
+      return (currentExp / 100) * 100;
     }
   }
 }

@@ -2,7 +2,7 @@
   <div>
     <div class="columns is-multiline has-large-margin-bottom">
       <div class="column is-3 is-offset-1">
-        <PlayerProfile :player="player" :lastMatchInDays="3"/>
+        <PlayerProfile v-if="player" :player="player" :lastMatchInDays="3"/>
       </div>
       <div class="column is-5 is-offset-2">
         <div class="is-flex-direction-row is-flex">
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 // @ is an alias to /src
 import StatsBox from '@/components/StatsBox.vue'
 import PlayerProfile from '@/components/PlayerProfile.vue'
@@ -85,14 +86,16 @@ export default {
     PlayerProfile,
     RadialProgressBar
   },
+  computed: {
+    ...mapGetters(['player']),  
+  },
+  mounted() {
+    
+  },
   data(){
     return {
       winrate: 5,
-      player: {
-        level: 21,
-        currentExp: 52,
-        totalExp: 104
-      },
+
       data: [
         { 'id': 1, 'type': "ARAM", 'team': 'Lorem Mana', 'placement': 3, 'allTeams': 10, 'points': '+31', 'details': '' },
         { 'id': 2, 'type': "ARAM", 'team': 'Lorem Mana', 'placement': 3, 'allTeams': 10, 'points': '+31', 'details': '' },

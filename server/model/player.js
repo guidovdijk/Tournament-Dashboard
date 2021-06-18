@@ -7,15 +7,17 @@ const playerSchema = mongoose.Schema(
     name: { type: String, unique: true, required: true },
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
+    level: { type: Number, default: 1 },
+    currentXp: { type: Number, default: 0 },
     wins: { type: Number, default: 0 },
     losses: { type: Number, default: 0 },
     points: { type: Number, default: 0 },
     profile_picture: String,
     role: {
       type: String,
-      default: "user",
+      default: "player",
       enum: [
-        "user",
+        "player",
         "admin"
       ]
     },
@@ -48,11 +50,4 @@ playerSchema.pre('save', function(next) {
   });
 });
 
-playerSchema.methods.comparePassword = function(candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-      if (err) return cb(err);
-      cb(null, isMatch);
-  });
-};
-   
 module.exports = mongoose.model("player", playerSchema);

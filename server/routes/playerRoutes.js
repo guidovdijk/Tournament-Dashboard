@@ -8,7 +8,7 @@ playerRoute.post("/register", player.create);
 playerRoute.get("/", player.findAll);
 
 // Retrieve a single player with id
-playerRoute.get("/login", player.login);
+playerRoute.post("/login", player.login);
 
 // Retrieve a single player with id
 playerRoute.get("/:id", player.findOne);
