@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 // @ is an alias to /src
 import StatsBox from '@/components/StatsBox.vue'
 import PlayerProfile from '@/components/PlayerProfile.vue'
@@ -89,8 +89,12 @@ export default {
   computed: {
     ...mapGetters(['player']),  
   },
-  mounted() {
-    
+
+  methods: {
+    ...mapActions(['getProfile']),  
+  },
+  created() {
+    this.getProfile();
   },
   data(){
     return {

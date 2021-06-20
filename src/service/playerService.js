@@ -22,7 +22,7 @@ const actions = {
   }, player) {
     commit('auth_request');
     try {
-      let res = await axios.post(url.players + '/login', player)
+      let res = await axios.post(url.user + '/login', player)
       if (res.data.success) {
         const token = res.data.token;
         const player = res.data.player;
@@ -38,6 +38,17 @@ const actions = {
       commit('auth_error', err);
     }
   },
+
+  // Get the user Profile
+  async getProfile({
+    commit
+  }) {
+    commit('profile_request');
+    let res = await axios.get(url.user + '/profile')
+    console.log(res);
+    commit('player_profile', res.data.player)
+    return res;
+  },
 }
 
 const mutations = {
@@ -50,7 +61,6 @@ const mutations = {
     state.player = player
     state.status = 'success'
     state.error = null
-    console.log(state);
   },
   auth_error(state, err) {
       state.error = err.response.data.msg

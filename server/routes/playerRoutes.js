@@ -1,14 +1,8 @@
 const player = require("../controller/playerController.js");
 const playerRoute = require("express").Router();
 
-// Create a new player
-playerRoute.post("/register", player.create);
-
 // Retrieve all player
 playerRoute.get("/", player.findAll);
-
-// Retrieve a single player with id
-playerRoute.post("/login", player.login);
 
 // Retrieve a single player with id
 playerRoute.get("/:id", player.findOne);

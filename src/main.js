@@ -10,6 +10,13 @@ import store from './store/store'
 Vue.use(Buefy)
 Vue.use(VueAxios, axios)
 
+// Load the token from the localStorage
+const token = localStorage.getItem("token");
+// Is there is any token then we will simply append default axios authorization headers
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = token;
+}
+
 Vue.config.productionTip = false
 
 new Vue({
