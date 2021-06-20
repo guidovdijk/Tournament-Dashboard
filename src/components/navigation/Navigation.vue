@@ -21,10 +21,7 @@
       </template>
 
       <template #end>
-          <b-navbar-item tag="router-link" :to="{ path: '/profile' }">
-              Profile
-          </b-navbar-item>
-          <b-navbar-item tag="a" @click="logout">
+          <b-navbar-item tag="a" @click="logoutAction">
               Sign out
           </b-navbar-item>
       </template>
@@ -32,11 +29,17 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "Navigation",
   methods: {
-    logout: function () {
-      console.log("Logout");
+
+    ...mapActions(['logout']),  
+      
+    logoutAction: function () {
+      this.logout();
+      this.$router.push({name: 'Login'})
     }
   }
 }

@@ -39,13 +39,24 @@ const actions = {
     }
   },
 
+  // Logout the user
+  async logout({
+    commit
+  }) {
+    await localStorage.removeItem('token');
+    commit('logout');
+    delete axios.defaults.headers.common['Authorization'];
+
+    return
+  },
+
   // Get the user Profile
   async getProfile({
     commit
   }) {
     commit('profile_request');
     let res = await axios.get(url.user + '/profile')
-    console.log(res);
+
     commit('player_profile', res.data.player)
     return res;
   },

@@ -17,6 +17,7 @@
 import NoAccountNavigation from "./components/navigation/NoAccountNavigation.vue";
 import Navigation from "./components/navigation/Navigation.vue";
 import Background from "./components/Background.vue";
+import store from './store/store';
 
 export default {
   components: {
@@ -24,9 +25,9 @@ export default {
     NoAccountNavigation,
     Navigation,
   },
-  data(){
-    return {
-      isLoggedIn: true
+  computed: {
+    isLoggedIn: function(){
+      return store.getters.isLoggedIn
     }
   }
 }
