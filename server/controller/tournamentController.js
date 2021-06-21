@@ -31,10 +31,17 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   let id = req.params.id;
   Tournament.findById(id, function (err, tournament){
-      if(err) {
-        res.json(err);
-      }
+    if (!tournament){
+      return res.status(404).json({
+        msg: "tournament is not found",
+        success: false
+      });
+    }
+    if(err) {
+      res.json(err);
+    } else {
       res.json(tournament);
+    }
   }).populate('teams');
 };
 
@@ -45,13 +52,13 @@ exports.update = (req, res) => {
       res.status(404).send("tournament is not found");
     }
     else {
-        tournament = req.body;
+      tournament = req.body;
 
-        tournament.save().then(() => {
-          res.json('Updated tournament');
+      tournament.save().then(() => {
+        res.json('Updated tournament');
       })
       .catch(() => {
-            res.status(400).send("unable to update the tournament");
+        res.status(400).send("unable to update the tournament");
       });
     }
   });

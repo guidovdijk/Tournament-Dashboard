@@ -7,7 +7,7 @@
       <div class="box box--table">
         <h3 class="title is-5">Tournament Teams</h3>
         <b-table 
-          :data="data" 
+          :data="data.teams" 
           :mobile-cards="false" 
           detailed
           custom-detail-row
@@ -73,6 +73,9 @@
               </td>
             </tr>
           </template>
+           <template #empty>
+                <div class="has-text-centered">No records</div>
+            </template>
         </b-table>
       </div>
     </div>
@@ -83,7 +86,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 // @ is an alias to /src
 import TournamentForm from '@/components/forms/Tournament';
@@ -101,6 +104,7 @@ export default {
   data(){
     return {
       showDetailIcon: true,
+      tournamentData: [],
       data: [
         { id: 1, team: "Team 1", teamSize: 5, playersPresent: 2, players: [{id: 1, name: 'Loremana 1', points: 124}, {id: 4, name: 'LoremLife', points: 124}] },
         { id: 2, team: "Team 2", teamSize: 5, playersPresent: 5, players: [{id: 2, name: 'Loremana 2', points: 124}, {id: 5, name: 'LoremLife', points: 124}] },
@@ -109,19 +113,39 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['player']),  
+    ...mapGetters(['player', 'tournamentError']),  
+  },
+  mounted(){
+    this.fetchTournament();
   },
   methods: {
+    ...mapActions(['getTournament']),
+
+    fetchTournament: async function(){
+      const id = this.$route.params.id;
+
+      if(id == 'new'){
+        return;
+      }
+      
+      const tournamentData = await this.getTournament(id);      
+
+      if(this.tournamentError){
+        console.log(this.tournamentError);
+        return;
+      }
+
+      console.log(tournamentData);
+    },
     joinTeam: function(id){
-      console.log('join team: ', this.$route.params.id);
+      console.log('join team: ', id);
     },
     leaveTeam: function(id){
       console.log('leave team: ' + id);
     },
     loggedInPlayerInTeam: function(players){
-      // TODO: Rewrite to use player data from login session
       const loggedInPlayerId = this.player.id;
-      console.log(this.player);
+
       return players.filter(player => player.id === loggedInPlayerId).length > 0;
     }
   },

@@ -4,12 +4,14 @@ import { url } from '@/util/utils.js';
 const state = {
   status: '',
   tournaments: null,
-  tournamentError: null
+  tournamentError: null,
+  tournament: null,
 }
 
 const getters = {
   status: state => state.status,
   tournaments: state => state.tournaments,
+  tournament: state => state.tournament,
   tournamentError: state => state.tournamentError,
 }
 
@@ -26,6 +28,35 @@ const actions = {
     } catch (err) {
       commit('tournaments_error', err);
     }
+  },
+
+  async getTournament({commit}, id){
+    commit('tournaments_request');
+    try {
+      let res = await axios.get(url.tournaments + '/' + id);
+
+      if (res.data.success) {
+        const tournament = res.data.tournament;
+        commit('tournament_success', tournament);
+      }
+
+      return res;
+    } catch (err) {
+      commit('tournaments_error', err);
+    }
+  },
+
+  async createTournament({commit}){
+    commit('tournaments_request');
+    try {
+      let res = await axios.post(url.tournaments)
+      if (res.data.success) {
+        commit('tournament_create_success');
+      }
+      return res;
+    } catch (err) {
+      commit('tournaments_error', err);
+    }
   }
 }
 
@@ -37,10 +68,18 @@ const mutations = {
     state.status = 'success';
     state.tournaments = tournaments;
   },
+  tournament_success(state, tournament){
+    state.status = 'success';
+    state.tournament = tournament;
+  },
+  tournament_create_success(state){
+    state.status = 'success';
+  },
   tournaments_error(state, err){
     state.status = 'error';
     state.tournamentError = err.response.data.msg
     state.tournaments = null;
+    state.tournament = null;
   }
 };
 

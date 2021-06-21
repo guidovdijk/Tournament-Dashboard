@@ -2,7 +2,7 @@
   <div class="columns is-multiline is-align-items-center">
     <div class="column is-9 is-flex is-justify-content-space-between is-align-items-center">
       <router-link :to="'/'" class="is-link has-text-grey-lighter">Back to home</router-link>
-      <router-link v-if="isAdmin" :to="'/tournaments/new'" class="button is-primary">New Tournament</router-link>
+      <router-link v-if="player.role == 'admin'" :to="'/tournaments/new'" class="button is-primary">New Tournament</router-link>
     </div>
     <div class="column is-9">
 
@@ -56,19 +56,20 @@ export default {
 
   },
   computed: {
-    ...mapGetters(['isAdmin']),  
+    ...mapGetters(['player']),  
   },
   methods: {
-    ...mapActions(['getTournaments']),
+    ...mapActions(['getTournaments', 'getProfile']),
     fetchTournaments: async function(){
       const tournamentData = await this.getTournaments();
       this.tournamentData = tournamentData.tournaments;
-
-      console.log(tournamentData);
     }
   },
   mounted() {
     this.fetchTournaments();
+  },
+  created(){
+    this.getProfile();
   },
   data(){
     return {
