@@ -10,6 +10,7 @@ const state = {
 
 const getters = {
   isLoggedIn: state => !!state.token,
+  isAdmin: state => state.player.role == "admin",
   authState: state => state.status,
   player: state => state.player,
   error: state => state.error

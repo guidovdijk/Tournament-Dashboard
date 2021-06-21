@@ -2,7 +2,7 @@
   <div class="columns is-multiline is-align-items-center">
     <div class="column is-9 is-flex is-justify-content-space-between is-align-items-center">
       <router-link :to="'/'" class="is-link has-text-grey-lighter">Back to home</router-link>
-      <router-link :to="'/tournaments/new'" class="button is-primary">New Tournament</router-link>
+      <router-link v-if="isAdmin" :to="'/tournaments/new'" class="button is-primary">New Tournament</router-link>
     </div>
     <div class="column is-9">
 
@@ -15,13 +15,15 @@
               props.row.type
             }}
           </b-table-column>
-          <b-table-column field="teamSize" label="Team size" v-slot="props">
+          <b-table-column field="teamSize" label="Players per team" v-slot="props">
             {{
               props.row.teamSize
             }}
-            /
+            players
+          </b-table-column>
+          <b-table-column field="startDateTime" label="Start DateTime" v-slot="props">
             {{
-              props.row.playersPresent
+              props.row.startDateTime
             }}
           </b-table-column>
           <b-table-column field="status" label="Status" v-slot="props">
@@ -46,21 +48,38 @@
 
 <script>
 // @ is an alias to /src
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: 'Tournaments',
   components: {
 
   },
+  computed: {
+    ...mapGetters(['isAdmin']),  
+  },
+  methods: {
+    ...mapActions(['getTournaments']),
+    fetchTournaments: async function(){
+      const tournamentData = await this.getTournaments();
+      this.tournamentData = tournamentData.tournaments;
+
+      console.log(tournamentData);
+    }
+  },
+  mounted() {
+    this.fetchTournaments();
+  },
   data(){
     return {
+      tournamentData: [],
       data: [
-        { 'id': 1, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'upcoming', 'price': '3 skins' },
-        { 'id': 2, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'started', 'price': '3 skins' },
-        { 'id': 3, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'upcoming', 'price': '3 skins' },
-        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'ended', 'price': '3 skins' },
-        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'started', 'price': '3 skins' },
-        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'playersPresent': 2, 'status': 'upcoming', 'price': '3 skins' },
+        { 'id': 1, 'type': "ARAM", 'teamSize': 5, 'startDateTime': '21/07/2021 21:00:00', 'status': 'upcoming', 'price': '3 skins' },
+        { 'id': 2, 'type': "ARAM", 'teamSize': 5, 'startDateTime': '21/07/2021 21:00:00', 'status': 'started', 'price': '3 skins' },
+        { 'id': 3, 'type': "ARAM", 'teamSize': 5, 'startDateTime': '21/07/2021 21:00:00', 'status': 'upcoming', 'price': '3 skins' },
+        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'startDateTime': '21/07/2021 21:00:00', 'status': 'ended', 'price': '3 skins' },
+        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'startDateTime': '21/07/2021 21:00:00', 'status': 'started', 'price': '3 skins' },
+        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'startDateTime': '21/07/2021 21:00:00', 'status': 'upcoming', 'price': '3 skins' },
       ],
     }
   }

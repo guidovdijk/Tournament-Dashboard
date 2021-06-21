@@ -26,7 +26,7 @@ const tournamentSchema = mongoose.Schema(
         'started',
         'upcoming',
         'ended',
-      ]
+      ],
     }
   }, {
     collection: 'tournaments'

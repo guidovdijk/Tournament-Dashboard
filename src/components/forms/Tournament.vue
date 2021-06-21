@@ -1,6 +1,6 @@
 <template>
   <form class="box box--tournament">
-    <h3 class="title is-4">Tournament Details</h3>
+    <h3 class="title is-5">Tournament Details</h3>
     <b-field label="Start Date and Time">
       <b-datetimepicker required 
         v-model="datetime"

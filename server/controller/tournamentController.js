@@ -19,7 +19,10 @@ exports.findAll = (req, res) => {
       res.json(err);
     }
     else {
-      res.json(tournaments);
+      res.status(200).json({
+        success: true,
+        tournaments: tournaments,
+      });
     }
   });
 };

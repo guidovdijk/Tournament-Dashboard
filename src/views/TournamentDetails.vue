@@ -83,6 +83,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 // @ is an alias to /src
 import TournamentForm from '@/components/forms/Tournament';
 
@@ -90,6 +92,11 @@ export default {
   name: 'TournamentDetails',
   components: {
     TournamentForm
+  },
+  props: {
+    isNewTournament: {
+      type: Boolean
+    }
   },
   data(){
     return {
@@ -101,19 +108,22 @@ export default {
       ],
     }
   },
+  computed: {
+    ...mapGetters(['player']),  
+  },
   methods: {
     joinTeam: function(id){
-      console.log('join team: ' + id);
+      console.log('join team: ', this.$route.params.id);
     },
     leaveTeam: function(id){
       console.log('leave team: ' + id);
     },
     loggedInPlayerInTeam: function(players){
       // TODO: Rewrite to use player data from login session
-      const loggedInPlayerId = 2;
-
+      const loggedInPlayerId = this.player.id;
+      console.log(this.player);
       return players.filter(player => player.id === loggedInPlayerId).length > 0;
     }
-  }
+  },
 }
 </script>

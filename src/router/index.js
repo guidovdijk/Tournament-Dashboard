@@ -37,8 +37,11 @@ const routes = [
   {
     path: '/tournaments/:id',
     name: 'TournamentDetails',
+    props: {
+      isNewTournament: false
+    },
     component: () => import(/* webpackChunkName: "TournamentDetails" */ '../views/TournamentDetails.vue')
-  }
+  },
 ]
 
 
