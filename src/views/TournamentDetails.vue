@@ -80,7 +80,7 @@
       </div>
     </div>
     <div class="column is-4">
-      <TournamentForm />
+      <TournamentForm :formData="tournamentData" @submitTournament="submit"/>
     </div>
   </div>
 </template>
@@ -104,7 +104,15 @@ export default {
   data(){
     return {
       showDetailIcon: true,
-      tournamentData: [],
+      // Start data for form of new tournament 
+      tournamentData: {
+        datetime: null,
+        teams: [2, 20],
+        players_per_team: null,
+        game_type: null,
+        price: null,
+        isNew: true,
+      },
       data: [
         { id: 1, team: "Team 1", teamSize: 5, playersPresent: 2, players: [{id: 1, name: 'Loremana 1', points: 124}, {id: 4, name: 'LoremLife', points: 124}] },
         { id: 2, team: "Team 2", teamSize: 5, playersPresent: 5, players: [{id: 2, name: 'Loremana 2', points: 124}, {id: 5, name: 'LoremLife', points: 124}] },
@@ -119,7 +127,7 @@ export default {
     this.fetchTournament();
   },
   methods: {
-    ...mapActions(['getTournament']),
+    ...mapActions(['getTournament', 'createTournament', 'createTeams']),
 
     fetchTournament: async function(){
       const id = this.$route.params.id;
@@ -136,7 +144,56 @@ export default {
       }
 
       console.log(tournamentData);
+      tournamentData.isNew = false;
+      this.tournamentData = tournamentData;
     },
+
+    submit: async function(data){
+      console.log(data);
+
+      if(data.isNew){
+        const tournament = await this.newTournament();
+        console.log(tournament.data.id);
+        this.newTeams(tournament.data.id).then(res => {
+          this.$router.push({name: 'Tournaments'});
+        }).catch(err => {
+          console.log(err);
+        })
+      }
+    },
+
+    newTournament: async function(){
+      const data = {...this.tournamentData};
+
+      delete data.teams;
+      delete data.isNew;
+
+      const tournament = await this.createTournament(data);
+
+      if(this.tournamentError){
+        console.log(this.tournamentError);
+        return;
+      }
+
+      return tournament;
+    },
+
+    newTeams: async function(id){
+      const maxTeams = this.tournamentData.teams[1];
+      const teams = [];
+
+      for(var i=1; i <= maxTeams; i++){
+        const team = {
+          tournament: id,
+          team_name: `Team ${i}`,
+        }
+
+        teams.push(team);
+      }
+
+      await this.createTeams(teams);
+    },
+
     joinTeam: function(id){
       console.log('join team: ', id);
     },

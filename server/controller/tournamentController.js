@@ -2,12 +2,14 @@ const Tournament = require("../model/tournament");
 
 // Create and Save a new Tournaments
 exports.create = (req, res) => {
+  console.log(req.body);
   let tournament = new Tournament(req.body);
   tournament.save()
     .then(() => {
-      res.status(200).json({'Tournament': 'tournament has been successfully added'});
+      return res.status(200).json({msg: 'tournament has been successfully added', id: tournament._id});
     })
-    .catch(() => {
+    .catch((err) => {
+      // console.log(err);
       res.status(400).send("unable to save to database");
     });
 };
@@ -30,7 +32,7 @@ exports.findAll = (req, res) => {
 // Find a single Tournaments with an id
 exports.findOne = (req, res) => {
   let id = req.params.id;
-  Tournament.findById(id, function (err, tournament){
+  Tournament.findOne({_id: id}, function (err, tournament){
     if (!tournament){
       return res.status(404).json({
         msg: "tournament is not found",

@@ -12,6 +12,19 @@ exports.create = (req, res) => {
     });
 };
 
+// Create and Save a new teams
+exports.createMany = (req, res) => {
+  Team.insertMany(req.body)
+    .then((data) => {
+      console.log(data);
+      res.status(200).json({msg: 'teams has been successfully added', success: true});
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).send({msg: "unable to save to database", success: false});
+    });
+};
+
 // Retrieve all teams from the database.
 exports.findAll = (req, res) => {
   Team.find(function(err, teams){

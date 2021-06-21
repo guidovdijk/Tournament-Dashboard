@@ -2,7 +2,7 @@ const team = require("../controller/teamController.js");
 const teamRoute = require("express").Router();
 
 // Create a new team
-teamRoute.post("/", team.create);
+teamRoute.post("/", team.createMany);
 
 // Retrieve all team
 teamRoute.get("/", team.findAll);

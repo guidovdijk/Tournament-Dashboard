@@ -28,7 +28,8 @@ require('./config/passport')(passport);
 
 mongoose.connect(config.url, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .then(() => {
     console.log("Connected to the database!");

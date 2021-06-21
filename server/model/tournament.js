@@ -5,10 +5,6 @@ const tournamentSchema = mongoose.Schema(
     datetime: { type: Date, required: true },
     players_per_team: { type: Number, required: true },
     price: { type: String, required: true },
-    teams: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Team'
-    }],
     game_type: {
       type: String,
       required: true,
@@ -21,7 +17,6 @@ const tournamentSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      required: true,
       enum: [
         'started',
         'upcoming',
@@ -32,5 +27,14 @@ const tournamentSchema = mongoose.Schema(
     collection: 'tournaments'
   }
 );
+
+tournamentSchema.virtual('teams', {
+  ref: 'Team',
+  localField: '_id',
+  foreignField: 'tournament'
+});
+
+tournamentSchema.set('toObject', { virtuals: true });
+tournamentSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model("Tournament", tournamentSchema);

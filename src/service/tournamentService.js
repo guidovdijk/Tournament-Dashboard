@@ -46,10 +46,10 @@ const actions = {
     }
   },
 
-  async createTournament({commit}){
+  async createTournament({commit}, tournament){
     commit('tournaments_request');
     try {
-      let res = await axios.post(url.tournaments)
+      let res = await axios.post(url.tournaments, tournament)
       if (res.data.success) {
         commit('tournament_create_success');
       }
