@@ -44,26 +44,15 @@ exports.findOne = (req, res) => {
     } else {
       res.json(tournament);
     }
-  }).populate('teams');
+  }).populate('teams', null, null, { sort: { team_name: 1 } } );
 };
 
 // Update a Tournaments by the id in the request
 exports.update = (req, res) => {
-  Tournament.findById(req.params.id, function(err, tournament) {
-    if (!tournament){
-      res.status(404).send("tournament is not found");
-    }
-    else {
-      tournament = req.body;
-
-      tournament.save().then(() => {
-        res.json('Updated tournament');
-      })
-      .catch(() => {
-        res.status(400).send("unable to update the tournament");
-      });
-    }
-  });
+  Tournament.findByIdAndUpdate(req.params.id, req.body)
+    .catch(err =>{
+      res.json(err);
+    })
 };
 
 // Delete a Tournaments with the specified id in the request

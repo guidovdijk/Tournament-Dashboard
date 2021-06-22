@@ -21,7 +21,7 @@
     </b-field>
 
     <b-field label="Min and Max Teams needed">
-      <b-slider required v-model="formData.teams" :min="2" :max="20" :step="1" ticks>
+      <b-slider required v-model="formData.teamsNeeded" :min="2" :max="20" :step="1" ticks>
       </b-slider>
     </b-field>
 

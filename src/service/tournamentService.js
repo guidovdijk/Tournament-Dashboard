@@ -57,6 +57,19 @@ const actions = {
     } catch (err) {
       commit('tournaments_error', err);
     }
+  },
+
+  async updateTournament({commit}, tournament){
+    commit('tournaments_request');
+    try {
+      let res = await axios.put(url.tournaments + '/' + tournament._id, tournament)
+      if (res.data.success) {
+        commit('tournament_create_success');
+      }
+      return res;
+    } catch (err) {
+      commit('tournaments_error', err);
+    }
   }
 }
 

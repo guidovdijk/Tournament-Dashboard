@@ -5,31 +5,30 @@
       <router-link v-if="player.role == 'admin'" :to="'/tournaments/new'" class="button is-primary">New Tournament</router-link>
     </div>
     <div class="column is-9">
-
       <div class="box box--table">
         <h3 class="title is-5">Tournaments</h3>
 
-        <b-table :data="data" :mobile-cards="false" class="is-large">
-          <b-table-column field="type" label="Type" v-slot="props">
+        <b-table :data="tournamentData" :mobile-cards="false" class="is-large">
+          <b-table-column field="game_type" label="Type" v-slot="props">
             {{
-              props.row.type
+              props.row.game_type | gameType
             }}
           </b-table-column>
-          <b-table-column field="teamSize" label="Players per team" v-slot="props">
+          <b-table-column field="players_per_team" label="Players per team" v-slot="props">
             {{
-              props.row.teamSize
+              props.row.players_per_team
             }}
             players
           </b-table-column>
-          <b-table-column field="startDateTime" label="Start DateTime" v-slot="props">
+          <b-table-column field="datetime" label="Start DateTime" v-slot="props">
             {{
-              props.row.startDateTime
+              props.row.datetime | date
             }}
           </b-table-column>
           <b-table-column field="status" label="Status" v-slot="props">
-            <span :class="'status status--'+props.row.status"></span>
+            <span :class="'status status--'+tournamentStatus(props.row)"></span>
             {{
-              props.row.status
+              tournamentStatus(props.row)
             }}
           </b-table-column>
           <b-table-column field="price" label="Price" v-slot="props">
@@ -56,13 +55,33 @@ export default {
 
   },
   computed: {
-    ...mapGetters(['player']),  
+    ...mapGetters(['player']),
+  },
+  filters: {
+    gameType: function(type){
+      return type.replace("_", " - ").replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+    },
+    date: function(date){
+      return new Date(date).toLocaleString('en-GB');
+    },
   },
   methods: {
     ...mapActions(['getTournaments', 'getProfile']),
     fetchTournaments: async function(){
       const tournamentData = await this.getTournaments();
-      this.tournamentData = tournamentData.tournaments;
+      this.tournamentData = tournamentData.data.tournaments;
+    },
+    tournamentStatus: function(tournament) {
+      const date = new Date();
+      const tournamentDate = new Date(tournament.datetime);
+
+      if(tournament.ended){
+        return 'ended';
+      } else if(tournamentDate.getTime() > date.getTime()){
+        return 'upcoming';
+      } else {
+        return 'started';
+      }
     }
   },
   mounted() {
@@ -74,14 +93,6 @@ export default {
   data(){
     return {
       tournamentData: [],
-      data: [
-        { 'id': 1, 'type': "ARAM", 'teamSize': 5, 'startDateTime': '21/07/2021 21:00:00', 'status': 'upcoming', 'price': '3 skins' },
-        { 'id': 2, 'type': "ARAM", 'teamSize': 5, 'startDateTime': '21/07/2021 21:00:00', 'status': 'started', 'price': '3 skins' },
-        { 'id': 3, 'type': "ARAM", 'teamSize': 5, 'startDateTime': '21/07/2021 21:00:00', 'status': 'upcoming', 'price': '3 skins' },
-        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'startDateTime': '21/07/2021 21:00:00', 'status': 'ended', 'price': '3 skins' },
-        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'startDateTime': '21/07/2021 21:00:00', 'status': 'started', 'price': '3 skins' },
-        { 'id': 4, 'type': "ARAM", 'teamSize': 5, 'startDateTime': '21/07/2021 21:00:00', 'status': 'upcoming', 'price': '3 skins' },
-      ],
     }
   }
 }

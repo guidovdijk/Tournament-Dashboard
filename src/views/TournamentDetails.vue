@@ -7,27 +7,28 @@
       <div class="box box--table">
         <h3 class="title is-5">Tournament Teams</h3>
         <b-table 
-          :data="data.teams" 
+          :data="tournamentData.teams" 
           :mobile-cards="false" 
           detailed
           custom-detail-row
           :show-detail-icon="showDetailIcon"
-          detail-key="id"
+          detail-key="_id"
           class="is-large table--teams"
         >
-          <b-table-column field="type" label="Type" v-slot="props">
+          <b-table-column field="team_name" label="Team name" v-slot="props">
             {{
-              props.row.team
+              props.row.team_name
             }}
           </b-table-column>
-          <b-table-column field="teamSize" label="Team size" v-slot="props">
+          <b-table-column field="teamSize" label="Team size / players present" v-slot="props">
             {{
-              props.row.teamSize
+              tournamentData.players_per_team
             }}
             /
-            {{
-              props.row.playersPresent
-            }}
+            <span v-if="props.row.players && props.row.players.length">
+              {{props.row.players.length}}
+            </span>
+            <span v-else>0</span>
           </b-table-column>
           <b-table-column  field="id" label="" cell-class="has-text-right" v-slot="props">
             <template v-if="loggedInPlayerInTeam(props.row.players)">
@@ -54,7 +55,7 @@
           <template slot="detail" slot-scope="props">
             <tr class="table--teams__players" >
               <td colspan="4" class="table--teams__players__table-wrapper">
-                <table>
+                <table v-if="props.row.players.length > 0">
                   <thead>
                     <tr>
                       <th>Player name</th>
@@ -70,6 +71,7 @@
                     </tr>
                   </tbody>
                 </table>
+                <div class="has-text-centered py-6" v-else>No players present</div>
               </td>
             </tr>
           </template>
@@ -107,7 +109,7 @@ export default {
       // Start data for form of new tournament 
       tournamentData: {
         datetime: null,
-        teams: [2, 20],
+        teamsNeeded: [2, 20],
         players_per_team: null,
         game_type: null,
         price: null,
@@ -126,8 +128,11 @@ export default {
   mounted(){
     this.fetchTournament();
   },
+  created(){
+    this.getProfile();
+  },
   methods: {
-    ...mapActions(['getTournament', 'createTournament', 'createTeams']),
+    ...mapActions(['getTournament', 'createTournament', 'updateTournament', 'createTeams', 'getProfile']),
 
     fetchTournament: async function(){
       const id = this.$route.params.id;
@@ -143,31 +148,49 @@ export default {
         return;
       }
 
-      console.log(tournamentData);
-      tournamentData.isNew = false;
-      this.tournamentData = tournamentData;
+      delete tournamentData.data.id;
+      console.log({fetch: tournamentData.data});
+      this.tournamentData = tournamentData.data;
+
+      this.tournamentData.teamsNeeded = [tournamentData.data.min_teams, tournamentData.data.max_teams];
+
+      this.tournamentData.datetime = new Date(this.tournamentData.datetime);
+      tournamentData.data.isNew = false;
     },
 
-    submit: async function(data){
-      console.log(data);
+    submit: async function(formData){
+      const data = {...this.tournamentData};
 
-      if(data.isNew){
-        const tournament = await this.newTournament();
-        console.log(tournament.data.id);
+      data.min_teams = data.teamsNeeded[0];
+      data.max_teams = data.teamsNeeded[1];
+
+      delete data.teamsNeeded;
+      delete data.isNew;
+
+      if(formData.isNew){
+        const tournament = await this.newTournament(data);
+
         this.newTeams(tournament.data.id).then(res => {
           this.$router.push({name: 'Tournaments'});
         }).catch(err => {
           console.log(err);
         })
+      } else {
+        this.updateTournamentData(data)
       }
     },
 
-    newTournament: async function(){
-      const data = {...this.tournamentData};
+    updateTournamentData: async function(data){
+      console.log(data);
+      await this.updateTournament(data);
 
-      delete data.teams;
-      delete data.isNew;
+      if(this.tournamentError){
+        console.log(this.tournamentError);
+        return;
+      }
+    },
 
+    newTournament: async function(data){
       const tournament = await this.createTournament(data);
 
       if(this.tournamentError){
@@ -203,6 +226,9 @@ export default {
     loggedInPlayerInTeam: function(players){
       const loggedInPlayerId = this.player.id;
 
+      if(!players){
+        return false;
+      }
       return players.filter(player => player.id === loggedInPlayerId).length > 0;
     }
   },
