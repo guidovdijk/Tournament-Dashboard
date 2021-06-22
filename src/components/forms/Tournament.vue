@@ -26,7 +26,7 @@
     </b-field>
 
     <b-field label="Players per Team">
-      <b-numberinput required controls-position="compact" v-model="formData.players_per_team" placeholder="6..."></b-numberinput>
+      <b-numberinput required controls-position="compact" v-model="formData.players_per_team" placeholder="6..." :min="1"></b-numberinput>
     </b-field>
 
     <b-field label="Game type">

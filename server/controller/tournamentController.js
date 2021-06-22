@@ -50,6 +50,12 @@ exports.findOne = (req, res) => {
 // Update a Tournaments by the id in the request
 exports.update = (req, res) => {
   Tournament.findByIdAndUpdate(req.params.id, req.body)
+    .then(() => {
+      return res.status(201).json({
+        msg: "tournament is updated",
+        success: true
+      });
+    })
     .catch(err =>{
       res.json(err);
     })

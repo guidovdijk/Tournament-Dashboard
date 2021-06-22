@@ -8,6 +8,8 @@ const teamRoute = require("./routes/teamRoutes.js");
 const playerRoute = require("./routes/playerRoutes.js");
 const userRoute = require("./routes/userRoutes.js");
 
+const Tournament = require("./model/tournament.js");
+
 const app = express();
 const PORT = 8090;
 
@@ -25,6 +27,25 @@ app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 // Bring in the Passport Strategy
 require('./config/passport')(passport);
+
+/*
+    const db = mongoose.connection;
+    db.once("open", function () {
+
+      
+    })
+*/
+const filter = [{
+  $match: {
+      'fullDocument._id': mongoose.Types.ObjectId("60d0f9c0c2fa3e1a74b1d499")
+  }
+}];
+
+const options = { fullDocument: 'updateLookup' }
+const changeStream = Tournament.watch(filter, options)
+changeStream.on('change', (change) => {
+  console.log(change);
+});
 
 mongoose.connect(config.url, {
     useNewUrlParser: true,
