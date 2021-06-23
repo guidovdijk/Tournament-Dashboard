@@ -86,3 +86,33 @@ exports.deleteAll = (req, res) => {
     message: "Delete all functionality not implemented"
   });
 };
+
+exports.addPlayer = (req, res) => {
+  console.log({params: req.params});
+  console.log({body: req.body._id});
+  Team.findByIdAndUpdate(req.params.id, { $push: { players: req.body._id } }, {new: true})
+  .then((doc) => {
+    console.log(doc);
+    return res.status(201).json({
+      msg: "Team is updated",
+      success: true
+    });
+  })
+  .catch(err =>{
+    res.json(err);
+  })
+}
+exports.deletePlayer = (req, res) => {
+  Team.findByIdAndUpdate(req.params.id, { $pull: { players: req.params.playerId } }, {new: true})
+  .then((doc) => {
+    console.log(doc);
+
+    return res.status(201).json({
+      msg: "Team is updated",
+      success: true
+    });
+  })
+  .catch(err =>{
+    res.json(err);
+  })
+}

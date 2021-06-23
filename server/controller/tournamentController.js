@@ -44,7 +44,7 @@ exports.findOne = (req, res) => {
     } else {
       res.json(tournament);
     }
-  }).populate('teams', null, null, { sort: { team_name: 1 } } );
+  }).populate({path: 'teams', model: 'Team', populate: {path: 'players', model: 'Player'} } );
 };
 
 // Update a Tournaments by the id in the request

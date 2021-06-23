@@ -20,11 +20,7 @@ const playerSchema = mongoose.Schema(
         "player",
         "admin"
       ]
-    },
-    teams: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Team"
-    }]
+    }
   }, {
     collection: 'players'
   }
@@ -50,4 +46,4 @@ playerSchema.pre('save', function(next) {
   });
 });
 
-module.exports = mongoose.model("player", playerSchema);
+module.exports = mongoose.model("Player", playerSchema);

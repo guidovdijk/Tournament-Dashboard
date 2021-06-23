@@ -13,6 +13,12 @@ teamRoute.get("/:id", team.findOne);
 // Update a team with id
 teamRoute.put("/:id", team.update);
 
+// Add player to a team with id
+teamRoute.post("/:id/player", team.addPlayer);
+
+// Add player to a team with id
+teamRoute.delete("/:id/player/:playerId", team.deletePlayer);
+
 // Delete a team with id
 teamRoute.delete("/:id", team.delete);
 

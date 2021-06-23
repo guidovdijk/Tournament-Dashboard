@@ -28,6 +28,35 @@ const actions = {
     } catch (err) {
       commit('teams_error', err);
     }
+  },
+
+  async addPlayer({commit}, payload){
+    commit('teams_request');
+    console.log('test', payload.player);
+    try {
+      let res = await axios.post(`${url.teams}/${payload.id}/player`, payload.player)
+      if (res.data.success) {
+        commit('team_create_success');
+      }
+      return res;
+    } catch(err){
+      commit('teams_error', err);
+    }
+  },
+
+  async deletePlayer({commit}, payload){
+    commit('teams_request');
+
+    console.log(payload);
+    try {
+      let res = await axios.delete(`${url.teams}/${payload.id}/player/${payload.player._id}`)
+      if (res.data.success) {
+        commit('team_create_success');
+      }
+      return res;
+    } catch(err){
+      commit('teams_error', err);
+    }
   }
 }
 

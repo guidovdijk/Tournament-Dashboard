@@ -35,7 +35,7 @@
               <b-button 
                 class="table__button-fix" 
                 type="is-danger" 
-                @click="leaveTeam(props.row.id)"
+                @click="leaveTeam(props.row._id)"
               >
                 Leave
               </b-button>
@@ -127,7 +127,7 @@ export default {
     this.getProfile();
   },
   methods: {
-    ...mapActions(['getTournament', 'createTournament', 'updateTournament', 'createTeams', 'getProfile']),
+    ...mapActions(['getTournament', 'createTournament', 'updateTournament', 'createTeams', 'getProfile', 'addPlayer', 'deletePlayer']),
 
     fetchTournament: async function(){
       const id = this.$route.params.id;
@@ -218,13 +218,17 @@ console.log("fetch");
       await this.createTeams(teams);
     },
 
-    joinTeam: function(id){
+    joinTeam: async function(id){
       console.log('join team: ', id);
       console.log('player: ', this.player);
+      const res = await this.addPlayer({id, player: this.player});
+      console.log({res});
     },
 
-    leaveTeam: function(id){
+    leaveTeam: async function(id){
       console.log('leave team: ' + id);
+      const res = await this.deletePlayer({id, player: this.player});
+      console.log({res});
     },
 
     loggedInPlayerInTeam: function(players){
