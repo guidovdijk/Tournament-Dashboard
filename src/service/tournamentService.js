@@ -62,6 +62,7 @@ const actions = {
   async updateTournament({commit}, tournament){
     commit('tournaments_request');
     try {
+      console.log('tournament: ', tournament);
       let res = await axios.put(url.tournaments + '/' + tournament._id, tournament)
       if (res.data.success) {
         commit('tournament_create_success');

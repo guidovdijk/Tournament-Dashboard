@@ -37,7 +37,7 @@
               }}
           </b-table-column>
           <b-table-column  field="id" label="" v-slot="props" cell-class="has-text-right">
-            <router-link :to="'/tournaments/'+props.row.id" class="is-link has-text-grey-lighter">Details</router-link>
+            <router-link :to="'/tournaments/'+props.row._id" class="is-link has-text-grey-lighter">Details</router-link>
           </b-table-column>
         </b-table>
       </div>
@@ -69,6 +69,7 @@ export default {
     ...mapActions(['getTournaments', 'getProfile']),
     fetchTournaments: async function(){
       const tournamentData = await this.getTournaments();
+      console.log(tournamentData);  
       this.tournamentData = tournamentData.data.tournaments;
     },
     tournamentStatus: function(tournament) {

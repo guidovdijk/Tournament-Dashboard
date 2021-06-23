@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const teamSchema = require("./team.js");
 
 const tournamentSchema = mongoose.Schema(
   {
@@ -25,24 +26,11 @@ const tournamentSchema = mongoose.Schema(
         'upcoming',
         'ended',
       ],
-    }
+    },
+    teams: [teamSchema],
   }, {
     collection: 'tournaments'
   }
 );
-
-tournamentSchema.virtual('teams', {
-  ref: 'Team',
-  localField: '_id',
-  foreignField: 'tournament'
-});
-
-tournamentSchema.set('toObject', { virtuals: true });
-tournamentSchema.set('toJSON', { virtuals: true });
-
-tournamentSchema.pre('remove', function(callback) {
-  // Remove all the docs that refers
-  this.model('Team').remove({ tournament: this._id }, callback);
-});
 
 module.exports = mongoose.model("Tournament", tournamentSchema);

@@ -49,8 +49,8 @@ exports.findOne = (req, res) => {
 
 // Update a Tournaments by the id in the request
 exports.update = (req, res) => {
-  Tournament.findByIdAndUpdate(req.params.id, req.body)
-    .then(() => {
+  Tournament.findByIdAndUpdate(req.params.id, req.body, {"teams": req.body.teams})
+    .then((tournament) => {
       return res.status(201).json({
         msg: "tournament is updated",
         success: true

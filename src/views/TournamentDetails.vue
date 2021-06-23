@@ -35,7 +35,7 @@
               <b-button 
                 class="table__button-fix" 
                 type="is-danger" 
-                @click="leaveTeam(props.row._id)"
+                @click="leaveTeam(props.row)"
               >
                 Leave
               </b-button>
@@ -44,7 +44,7 @@
               <b-button 
                 class="table__button-fix" 
                 type="is-primary" 
-                @click="joinTeam(props.row._id)"
+                @click="joinTeam(props.row)"
                 :disabled="props.row.teamSize <= props.row.playersPresent"
               >
                 Join
@@ -132,7 +132,8 @@ export default {
     fetchTournament: async function(){
       const id = this.$route.params.id;
 
-console.log("fetch");
+      console.log("fetch");
+
       if(id == 'new'){
         return;
       }
@@ -156,22 +157,24 @@ console.log("fetch");
     },
 
     submit: async function(formData){
-      const data = {...this.tournamentData};
-
+      console.log(formData);
+      const data = {...formData};
       data.min_teams = data.teamsNeeded[0];
       data.max_teams = data.teamsNeeded[1];
 
       delete data.teamsNeeded;
-      delete data.isNew;
 
       if(formData.isNew){
+        data.teams = this.newTeams();
+
         const tournament = await this.newTournament(data);
 
-        this.newTeams(tournament.data.id).then(res => {
-          this.$router.push({name: 'Tournaments'});
-        }).catch(err => {
-          console.log(err);
-        })
+        if(this.tournamentError){
+          console.log(this.tournamentError);
+          return;
+        }
+
+        this.$router.push({name: 'Tournaments'});
       } else {
         const response = await this.updateTournamentData(data)
         console.log(response);
@@ -202,42 +205,54 @@ console.log("fetch");
       return tournament;
     },
 
-    newTeams: async function(id){
-      const maxTeams = this.tournamentData.teams[1];
+    newTeams: function(){
+      console.log(this.tournamentData);
+      const maxTeams = this.tournamentData.teamsNeeded[1];
       const teams = [];
 
       for(var i=1; i <= maxTeams; i++){
         const team = {
-          tournament: id,
           team_name: `Team ${i}`,
         }
 
         teams.push(team);
       }
 
-      await this.createTeams(teams);
+      return teams;
     },
 
-    joinTeam: async function(id){
-      console.log('join team: ', id);
-      console.log('player: ', this.player);
-      const res = await this.addPlayer({id, player: this.player});
-      console.log({res});
+    joinTeam: async function(team){
+      this.tournamentData.teams.forEach(t => {
+        const isInTeam = this.loggedInPlayerInTeam(t.players);
+
+        if(isInTeam){
+          this.leaveTeam(t);
+        }
+      })
+      
+      team.players.push(this.player);
+
+      const response = await this.updateTournament(this.tournamentData);
     },
 
-    leaveTeam: async function(id){
-      console.log('leave team: ' + id);
-      const res = await this.deletePlayer({id, player: this.player});
-      console.log({res});
+    leaveTeam: async function(team){
+      const removeIndex = team.players.map(player => player._id).indexOf(this.player._id);
+
+      if(removeIndex > -1){
+        team.players.splice(removeIndex, 1);
+
+        const response = await this.updateTournament(this.tournamentData);
+      }
     },
 
     loggedInPlayerInTeam: function(players){
-      const loggedInPlayerId = this.player.id;
+      const loggedInPlayerId = this.player._id;
 
       if(!players){
         return false;
       }
-      return players.filter(player => player.id === loggedInPlayerId).length > 0;
+      
+      return players.filter(player => player._id === loggedInPlayerId).length > 0;
     }
   },
 }
