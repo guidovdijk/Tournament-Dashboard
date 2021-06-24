@@ -13,3 +13,16 @@
     padding: 15px 11px;
   }
 }
+
+.buttons.no-margin {
+  .button:not(:last-child) {
+    margin-right: 0;
+  }
+  .button {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+  &:last-child {
+    margin: 0;
+  }
+}

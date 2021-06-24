@@ -30,7 +30,7 @@
               </b-button>
             </template>
             <template v-else>
-              <b-button class="table__button-fix" type="is-primary" @click="joinTeam(props.row), update()"
+              <b-button class="table__button-fix" type="is-primary" @click="leaveFreeAgents(), joinTeam(props.row), update()"
                 :disabled="props.row.teamSize <= props.row.playersPresent">
                 Join
               </b-button>
@@ -104,10 +104,21 @@
             }}
           </b-table-column>
           <b-table-column v-slot="props" cell-class="has-text-right">
-            <b-button v-if="isAdmin && !isEqualToLoggedInPlayer(props.row._id)" type="is-danger"
-              size="is-medium" class="button--with-icon" icon-right="delete"
-              @click="leaveFreeAgents(props.row), update()"
-            />
+            <div class="buttons no-margin is-justify-content-flex-end is-align-items-center" v-if="isAdmin && !isEqualToLoggedInPlayer(props.row._id)">
+
+              <b-button type="is-text"
+                size="is-small"
+                 class="button--with-icon" icon-left="plus"
+                @click="activateFreeAgentModal(props.row)"
+              >
+              Add to Team
+              </b-button>
+              <div class="is-divider-vertical"></div>
+              <b-button type="is-danger"
+                size="is-medium" class="button--with-icon" icon-right="delete"
+                @click="leaveFreeAgents(props.row), update()"
+              />
+            </div>
           </b-table-column>
           <template #empty>
             <div class="has-text-centered py-6">No free-agents present</div>
@@ -135,8 +146,31 @@
           </p>
           <div class="buttons mt-5">
             <b-button type="is-primary" @click="leaveTeam(playerModal.team, playerModal.player), joinFreeAgents(playerModal.player), update()">Change to free-agent</b-button>
-
             <b-button type="is-danger" @click="leaveTeam(playerModal.team, playerModal.player), update()">Delete from tournament</b-button>
+          </div>
+        </div>
+      </div>
+    </b-modal>
+    <b-modal v-model="playerModal.isActiveFreeAgent" :width="540" scroll="keep">
+      <div class="box box--black-bis">
+        <div class="box-content" v-if="playerModal.player">
+          <h3 class="title is-5">Player: {{playerModal.player.name}}</h3>
+          <p class="">
+            Add player <span class="has-text-weight-semibold	">{{playerModal.player.name}}</span> to team:
+          </p>
+          <b-field label="">
+            <b-select placeholder="Select a team" v-model="playerModal.team">
+                <option
+                  v-for="team in availableTeams"
+                  :value="team"
+                  :key="team.team_name"
+                >
+                  {{ team.team_name }}
+                </option>
+            </b-select>
+          </b-field>
+          <div class="buttons mt-5">
+            <b-button type="is-primary" @click="joinTeam(playerModal.team, playerModal.player), update()">Add to team</b-button>
           </div>
         </div>
       </div>
@@ -166,7 +200,9 @@ export default {
       showDetailIcon: true,
       playerModal: {
         isActive: false,
-        player: null
+        isActiveFreeAgent: false,
+        player: null,
+        team: null
       },
       // Start data for form of new tournament 
       tournamentData: {
@@ -194,6 +230,10 @@ export default {
 
       return this.tournamentData.free_agents.filter(p => p._id == this.player._id).length > 0;
     },
+
+    availableTeams: function(){
+      return this.tournamentData.teams.filter(t => t.players.length < this.tournamentData.players_per_team);
+    }
   },
   mounted(){
     this.fetchTournament();
@@ -213,6 +253,11 @@ export default {
       this.playerModal.isActive = true;
       this.playerModal.player = player;
       this.playerModal.team = team;
+    },
+
+    activateFreeAgentModal(player) {
+      this.playerModal.isActiveFreeAgent = true;
+      this.playerModal.player = player;
     },
 
     fetchTournament: async function(){
@@ -323,9 +368,21 @@ export default {
 
     update: async function(){
       const response = await this.updateTournament(this.tournamentData);
+      this.playerModal.isActive = false;
+      this.playerModal.isActiveFreeAgent = false;
+      this.playerModal.player = null;
+      this.playerModal.team = null;    
     },
 
     joinFreeAgents: async function(player = this.player){
+      this.tournamentData.teams.forEach(t => {
+        const isInTeam = this.loggedInPlayerInTeam(t.players);
+
+        if(isInTeam){
+          this.leaveTeam(t, player);
+        }
+      });
+
       this.tournamentData.free_agents.push(player);
     },
 

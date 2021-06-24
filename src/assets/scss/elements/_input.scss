@@ -32,3 +32,7 @@
 .select:not(.is-multiple):not(.is-loading)::after {
   border-color: $input-color;
 }
+
+.modal .select:not(.is-multiple):not(.is-loading)::after {
+  margin-top: 0;
+}
