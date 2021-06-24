@@ -104,7 +104,7 @@
             }}
           </b-table-column>
           <b-table-column v-slot="props" cell-class="has-text-right">
-            <b-button v-if="isAdmin && !isEqualToLoggedInPlayer(player._id)" type="is-danger"
+            <b-button v-if="isAdmin && !isEqualToLoggedInPlayer(props.row._id)" type="is-danger"
               size="is-medium" class="button--with-icon" icon-right="delete"
               @click="leaveFreeAgents(props.row), update()"
             />
