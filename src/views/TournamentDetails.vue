@@ -49,7 +49,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="player in props.row.players" :key="'player-'+player.id">
+                    <tr v-for="player in props.row.players" :key="'player-'+player._id">
                       <td>{{player.name}} <span
                           class="is-italic">{{isEqualToLoggedInPlayer(player._id) ? '(you)' : ''}}</span></td>
                       <td>{{player.points}}</td>
@@ -57,7 +57,7 @@
                       <td class="has-text-right">
                         <b-button v-if="isAdmin && !isEqualToLoggedInPlayer(player._id)" type="is-danger"
                           size="is-medium" class="button--with-icon" icon-right="delete"
-                          @click="activatePlayerModal(player)" />
+                          @click="activatePlayerModal(player, props.row)" />
                       </td>
                     </tr>
                   </tbody>
@@ -134,9 +134,9 @@
             or remove him entirely from the tournament?
           </p>
           <div class="buttons mt-5">
-            <b-button type="is-primary">Change to free-agent</b-button>
+            <b-button type="is-primary" @click="leaveTeam(playerModal.team, playerModal.player), joinFreeAgents(playerModal.player), update()">Change to free-agent</b-button>
 
-            <b-button type="is-danger">Delete from tournament</b-button>
+            <b-button type="is-danger" @click="leaveTeam(playerModal.team, playerModal.player), update()">Delete from tournament</b-button>
           </div>
         </div>
       </div>
@@ -209,9 +209,10 @@ export default {
       return this.player._id == id;
     },
 
-    activatePlayerModal(player) {
+    activatePlayerModal(player, team) {
       this.playerModal.isActive = true;
       this.playerModal.player = player;
+      this.playerModal.team = team;
     },
 
     fetchTournament: async function(){
@@ -306,16 +307,18 @@ export default {
       return teams;
     },
 
-    joinTeam: async function(team){
+    joinTeam: async function(team, player = this.player){
       this.tournamentData.teams.forEach(t => {
         const isInTeam = this.loggedInPlayerInTeam(t.players);
 
         if(isInTeam){
           this.leaveTeam(t);
         }
-      })
+      });
+
+      this.leaveFreeAgents(player);
       
-      team.players.push(this.player);
+      team.players.push(player);
     },
 
     update: async function(){
@@ -328,7 +331,10 @@ export default {
 
     leaveFreeAgents: async function(player = this.player){
       const removeIndex = this.tournamentData.free_agents.map(p => p._id).indexOf(player._id);
-      this.tournamentData.free_agents.splice(removeIndex, 1);
+
+      if(removeIndex > -1){
+        this.tournamentData.free_agents.splice(removeIndex, 1);
+      }
     },
 
     leaveTeam: async function(team, player = this.player){
