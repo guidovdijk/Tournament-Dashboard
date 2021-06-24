@@ -132,6 +132,9 @@
           <div class="box">
             <h3 class="title is-5 mb-0">Tournament starts in</h3>
             <Countdown :date="this.tournamentData.datetime" />
+            <b-button v-if="isAdmin" class="is-block mg-auto" type="is-primary" @click="console.log('')">
+              Start now
+            </b-button>
           </div>
         </div>
         <div class="column is-12">
