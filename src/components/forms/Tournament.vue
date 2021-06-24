@@ -7,6 +7,7 @@
         placeholder="10/07/2021 - 21:00:00..."
         :locale="locale"
         :timepicker="{enableSeconds, hourFormat}"
+        :disabled="!isAdmin"
       >
         <template #right>
           <b-button
@@ -21,16 +22,16 @@
     </b-field>
 
     <b-field label="Min and Max Teams needed">
-      <b-slider required v-model="formData.teamsNeeded" :min="2" :max="20" :step="1" ticks>
+      <b-slider :disabled="!isAdmin" required v-model="formData.teamsNeeded" :min="2" :max="20" :step="1" ticks>
       </b-slider>
     </b-field>
 
     <b-field label="Players per Team">
-      <b-numberinput required controls-position="compact" v-model="formData.players_per_team" placeholder="6..." :min="1"></b-numberinput>
+      <b-numberinput :disabled="!isAdmin" required controls-position="compact" v-model="formData.players_per_team" placeholder="6..." :min="1"></b-numberinput>
     </b-field>
 
     <b-field label="Game type">
-      <b-select placeholder="ARAM..." required size="is-medium" v-model="formData.game_type" message="Please select a game type">
+      <b-select :disabled="!isAdmin" placeholder="ARAM..." required size="is-medium" v-model="formData.game_type" message="Please select a game type">
           <option value="aram_draft">ARAM - Draft</option>
           <option value="aram_blind">ARAM - Blind</option>
           <option value="summonersrift_draft">Summoners Rift - Draft</option>
@@ -39,10 +40,10 @@
     </b-field>
 
     <b-field label="Price">
-      <b-input required v-model="formData.price" placeholder="3 skins..."></b-input>
+      <b-input :disabled="!isAdmin" required v-model="formData.price" placeholder="3 skins..."></b-input>
     </b-field>
 
-    <b-field>
+    <b-field v-if="isAdmin">
       <b-button 
         tag="input"
         native-type="submit"
@@ -55,6 +56,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "TournamentForm",
   props: {
@@ -68,9 +71,20 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getProfile']),
     submitTournament: function() {
       this.$emit('submitTournament', this.formData);
     }
-  }
+  },
+  computed: {
+    ...mapGetters(['player', 'tournamentError']),
+
+    isAdmin: function(){
+      return this.player.role == 'admin';
+    },
+  },
+  created(){
+    this.getProfile();
+  },
 }
 </script>

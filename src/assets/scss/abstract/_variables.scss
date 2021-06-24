@@ -166,6 +166,8 @@ $input-placeholder-color: #718187;
 $input-color: #A7B4BA;
 $input-border-color: transparent;
 $input-hover-border-color: transparent;
+$input-disabled-background-color: $input-background-color;
+$input-disabled-color: $input-color;
 
 $navbar-background-color: #111717;
 $navbar-height: 5.25rem;
