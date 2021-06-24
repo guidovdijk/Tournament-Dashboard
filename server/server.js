@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const config = require("./config/db.config");
 const passport = require('passport');
 const tournamentRoute = require("./routes/tournamentRoutes.js");
-const teamRoute = require("./routes/teamRoutes.js");
+// const teamRoute = require("./routes/teamRoutes.js");
 const playerRoute = require("./routes/playerRoutes.js");
 const userRoute = require("./routes/userRoutes.js");
 
@@ -37,14 +37,14 @@ require('./config/passport')(passport);
 */
 const filter = [{
   $match: {
-      'fullDocument._id': mongoose.Types.ObjectId("60d0f9c0c2fa3e1a74b1d499")
+    'fullDocument._id': mongoose.Types.ObjectId("60d362953e9fcf3450d3f074")
   }
 }];
 
 const options = { fullDocument: 'updateLookup' }
 const changeStream = Tournament.watch(filter, options)
 changeStream.on('change', (change) => {
-  console.log(change);
+  console.log('change: ', change);
 });
 
 mongoose.connect(config.url, {
@@ -61,7 +61,7 @@ mongoose.connect(config.url, {
   });
 
 app.use('/tournaments', tournamentRoute);
-app.use('/tournaments/teams', teamRoute);
+// app.use('/tournaments/teams', teamRoute);
 app.use('/players', playerRoute);
 app.use('/user', userRoute);
 

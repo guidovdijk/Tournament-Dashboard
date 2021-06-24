@@ -4,7 +4,7 @@
 // Colors
 
 $black:        #313131;
-$black-bis:    hsl(0, 0%, 7%) !default;
+$black-bis:    #212d2d;
 $black-ter:    hsl(0, 0%, 14%) !default;
 
 $grey-darker:  hsl(0, 0%, 21%) !default;
@@ -12,6 +12,7 @@ $grey-dark:    hsl(0, 0%, 29%) !default;
 $grey:         hsl(0, 0%, 48%) !default;
 $grey-light:   #869CA8;
 $grey-lighter: #CECECE;
+$grey-lightbis: #bfd3de;
 
 $white-ter:    hsl(0, 0%, 96%);
 $white-bis:    hsl(0, 0%, 98%) !default;
@@ -184,6 +185,11 @@ $progress-value-background-color: $primary;
 
 $table-color: #9EB8C7;
 $table-head-cell-color: $grey-lighter;
+$table-striped-row-even-background-color: #2d3b3f;
+$table-background-color: transparent;
+$table-body-background-color: rgba($color: #445669, $alpha: 0.44);
+$table-head-cell-border-width: 0 0 1px;
+$table-cell-border-width: 0;
 
 $datepicker-background-color: $input-background-color;
 $datepicker-item-color: $text;

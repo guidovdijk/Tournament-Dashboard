@@ -9,7 +9,7 @@ exports.create = (req, res) => {
       return res.status(200).json({msg: 'tournament has been successfully added', id: tournament._id});
     })
     .catch((err) => {
-      // console.log(err);
+      console.log(err);
       res.status(400).send("unable to save to database");
     });
 };
@@ -44,7 +44,7 @@ exports.findOne = (req, res) => {
     } else {
       res.json(tournament);
     }
-  }).populate({path: 'teams', model: 'Team', populate: {path: 'players', model: 'Player'} } );
+  }).populate({path: 'teams', model: 'Team', populate: {path: 'players', model: 'Player'} } ).populate('free_agents');
 };
 
 // Update a Tournaments by the id in the request

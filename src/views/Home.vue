@@ -18,7 +18,7 @@
         <div class="box box--table">
           <h3 class="title is-5">Match History</h3>
 
-          <b-table :data="data" :mobile-cards="false">
+          <b-table :data="data" :mobile-cards="false" class="table-large">
             <b-table-column field="type" label="Type" v-slot="props">
               {{
                 props.row.type

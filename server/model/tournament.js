@@ -28,6 +28,10 @@ const tournamentSchema = mongoose.Schema(
       ],
     },
     teams: [teamSchema],
+    free_agents: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Player"
+    }],
   }, {
     collection: 'tournaments'
   }

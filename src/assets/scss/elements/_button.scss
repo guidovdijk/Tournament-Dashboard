@@ -7,4 +7,9 @@
   .icon {
     color: $white;
   }
+
+  &--with-icon {
+    height: 0;
+    padding: 15px 11px;
+  }
 }

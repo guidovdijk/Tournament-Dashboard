@@ -4,3 +4,9 @@
 @import "input";
 @import "status";
 @import "table";
+
+p {
+  // font-size: 15px;
+  font-weight: 300;
+  color: $grey-lighter;
+}

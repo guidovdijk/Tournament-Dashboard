@@ -12,13 +12,18 @@
   }
 }
 
+.table {
+  tbody td {
+    vertical-align: middle;
+  }
+}
 .is-large {
   .table-wrapper {
     max-height: 790px;
   }
 }
 
-.table {
+.table-large .table {
   $table-border-radius: 6px;
 
   border-spacing: 0em 20px;
@@ -40,7 +45,6 @@
   td {
     padding-top: 32px;
     padding-bottom: 32px;
-    background-color: rgba($color: #445669, $alpha: 0.44);
   }
 
   thead span {
@@ -48,6 +52,8 @@
     font-weight: $weight-normal;
   }
 
+
+  
   tbody tr {
     border-radius: $table-border-radius;
   }
@@ -76,7 +82,7 @@
   }
 }
 
-.table--teams {
+.table .table--teams {
   th:nth-child(2), td:nth-child(2) {
     width: 200px;
   }
@@ -88,14 +94,15 @@
     td:first-child, td:last-child {
       border-radius: 0;
       border-left-style: solid;
-      border-color: #212d2d;
+      border-color: $black-bis;
     }
     
     td {
-      background-color: rgba($color: #212d2d, $alpha: 1);
+      background-color: rgba($color: $black-bis, $alpha: 1);
       border-bottom: 1px solid rgba($color: #445669, $alpha: 0.8) !important;
       padding-top: 15px;
       padding-bottom: 15px;
+      vertical-align: middle;
     }
     
     > td:first-child{
