@@ -127,7 +127,17 @@
       </div>
     </div>
     <div class="column is-4">
-      <TournamentForm :formData="tournamentData" @submitTournament="submit" />
+      <div class="columns is-multiline">
+        <div class="column is-12">
+          <div class="box">
+            <h3 class="title is-5 mb-0">Tournament starts in</h3>
+            <Countdown :date="this.tournamentData.datetime" />
+          </div>
+        </div>
+        <div class="column is-12">
+          <TournamentForm :formData="tournamentData" @submitTournament="submit" />
+        </div>
+      </div>
     </div>
     <b-modal v-model="playerModal.isActive" :width="540" scroll="keep">
       <div class="box box--black-bis">
@@ -183,11 +193,13 @@ import { mapActions, mapGetters } from "vuex";
 
 // @ is an alias to /src
 import TournamentForm from '@/components/forms/Tournament';
+import Countdown from '@/components/Countdown';
 
 export default {
   name: 'TournamentDetails',
   components: {
-    TournamentForm
+    TournamentForm,
+    Countdown
   },
   props: {
     isNewTournament: {
