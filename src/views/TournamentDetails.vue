@@ -66,6 +66,13 @@
               </td>
             </tr>
           </template>
+          <template #footer>
+            <div class="is-justify-content-center is-align-items-center is-flex">
+              <b-button class="" type="is-text" outlined @click="createTeam()">
+                Create new team
+              </b-button>
+            </div>
+          </template>
           <template #empty>
             <div class="has-text-centered">No records</div>
           </template>
@@ -248,6 +255,11 @@ export default {
 
     availableTeams: function(){
       return this.tournamentData.teams.filter(t => t.players.length < this.tournamentData.players_per_team);
+    },
+
+    maxTeamsReached: function(){
+      const teamsLength = this.tournamentData.teams.length;
+      return this.tournamentData.max_teams <= teamsLength;
     }
   },
   mounted(){
@@ -351,12 +363,29 @@ export default {
       return tournament;
     },
 
+    createTeam: function(){
+      const teamsLength = this.tournamentData.teams.length + 1;
+      const team = {
+        team_name: `Team ${teamsLength}`,
+      }
+
+
+      if(!this.maxTeamsReached){
+        this.tournamentData.teams.push(team);
+
+        this.update()
+      } else {
+        console.log("Max teams reached");
+      }
+
+    },
+
     newTeams: function(){
       console.log(this.tournamentData);
-      const maxTeams = this.tournamentData.teamsNeeded[1];
+      const minTeams = this.tournamentData.teamsNeeded[1];
       const teams = [];
 
-      for(var i=1; i <= maxTeams; i++){
+      for(var i=1; i <= minTeams; i++){
         const team = {
           team_name: `Team ${i}`,
         }
