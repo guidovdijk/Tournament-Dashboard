@@ -20,6 +20,7 @@
         password-reveal>
       </b-input>
       </b-field>
+      <p class="has-text-danger" v-if="error">{{this.error}}</p>
       <b-field grouped class="is-centered">
         <b-button tag="input"
           native-type="submit"
@@ -46,10 +47,15 @@ export default {
       loginFormData: {
         email: '',
         password: ''
-      }
+      },
+      error: '',
     }
   },
   methods: {
+    /*
+      guido@hotmail.com
+      test123!
+    */
     ...mapActions(['login']),
     loginSubmit: function(){
       this.login(this.loginFormData)
@@ -60,6 +66,7 @@ export default {
         })
         .catch(err => {
           console.log(err);
+          this.error = 'This email and password combination does not exist'
         });
     }
   }

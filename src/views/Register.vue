@@ -37,6 +37,7 @@
             password-reveal>
         </b-input>
       </b-field>
+      <p class="has-text-danger" v-if="error">{{this.error}}</p>
       <b-field grouped class="is-centered">
         <b-button tag="input"
           native-type="submit"
@@ -65,7 +66,8 @@ export default {
         name: '',
         password: '',
         retypePassword: ''
-      }
+      },
+      error: '',
     }
   },
   computed: {
@@ -77,12 +79,13 @@ export default {
   },
   methods: {
     register: function(){
-      console.log(url.players + '/register');
-      this.axios.post(url.players + '/register', this.registerFormData).then(() => {
-          this.$router.push({name: 'Login'});
-        }).catch((error) => {
-                console.log(error.response);
-            })
+      console.log(url.user + '/register');
+      this.axios.post(url.user + '/register', this.registerFormData).then(() => {
+        this.$router.push({name: 'Login'});
+      }).catch((error) => {
+          console.log(error.response);
+          this.error = error.response.data.message
+      })
     }
   }
 }

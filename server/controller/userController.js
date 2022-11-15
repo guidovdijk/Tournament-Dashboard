@@ -1,6 +1,7 @@
 const Player = require("../model/player");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 // Create and Save a new players
 exports.create = (req, res) => {
@@ -41,7 +42,7 @@ exports.login = (req, res) => {
                 name: player.name,
                 email: player.email
             }
-            jwt.sign(payload, 'secretcurrykey', {
+            jwt.sign(payload, process.env.SECRET, {
                 expiresIn: 604800
             }, (err, token) => {
                 res.status(200).json({

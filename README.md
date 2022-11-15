@@ -1,4 +1,5 @@
 # tournament-dashboard
+Make sure the Node version is `10.16.0` (`nvm install 10.16.0`, `nvm use 10.16.0`).<br>
 
 ## Project setup
 ```
